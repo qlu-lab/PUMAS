@@ -60,15 +60,11 @@ Run p-value fine-tuning
 
 ```
 R 
-3-assoc.clogit.R
+submit.R
 ```
 
 
-
-
-
 ## Authors
-
 
 See also the list of [contributors](##) who participated in this project.
 
