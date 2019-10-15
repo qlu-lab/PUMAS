@@ -40,16 +40,17 @@ install_github("qlu-lab/PRS-Fine-tuning/PRS-Fine-tuning")
 
 
 ## Input Data
-| Parameter                   | Directory Name | Description                                                                  |
+We requires an input file in a form of csv including those values. The file name is T0030_pruned.txt in our case.
+| Parameter                   | Parameter Usage | Description                                                                  |
 |----------------------------|----------------|------------------------------------------------------------------------------|
 | Beta            |  data.real$Beta     |  |
-| MAF         | data.real$EAF          | The chromosome of the gene        |
-| Se              | data.real$SE        | Gene name                        |                                                    
-| Sample          |N.sample=766345 | The path of the fam file, the ids in the fam file should fit the ids from the vcf file  |
-| Res_TildeRL         |results by FunII.TildeRL | The path of the original prediciton matrix  |
-|P-value        |--p_val | The cutoff value|
+| MAF         | data.real$EAF          |         |
+| Se              | data.real$SE        |                         |                                                    
+| Sample          |N.sample=766345 | Sample size that we are interested in |
+| Res_TildeRL         |results by FunII.TildeRL |   |
+| P-value        |--p_val | The cutoff value|
 
-Explain how to run the automated tests for this system
+
 
 ### Step 1
 
@@ -62,8 +63,7 @@ mkdir results
 Run p-value fine-tuning
 
 ```
-R 
-submit.R
+
 ```
 
 
