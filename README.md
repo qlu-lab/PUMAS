@@ -7,34 +7,37 @@ Our project gives...
 
 ### Prerequisites
 
-The following R packages are required:
+The following R packages are required
+devtools
+PRS-Fine-tuning (Our package)
 
-
+If you don't have devtools installed, please install as following
+Mac and Linux:
 ```
-Give examples
+devtools::install_github("hadley/devtools")
+```
+Windows:
+```library(devtools)
+build_github_devtools()
+
+#### Restart R before continuing ####
+install.packages("devtools.zip", repos = NULL)
+
+# Remove the package after installation
+unlink("devtools.zip")
+```
+Then, load the package
+```
+library(devtools)
 ```
 
 ### Step 0
-Downloading the following libraries and create a directory called trio-twas and change to this destination directory.
+Downloading the following libraries on working directory
 
 ```
-wget ..
-mkdir prs-tuning
-cd prs-tuning
-```
-Download xx.gz and decompress xx.gz under folder trio-twas
-```
-unzip xx.gz
-
+install_github("qlu-lab/PRS-Fine-tuning/PRS-Fine-tuning")
 ```
 
-Change to Scripts folder 
-```
-cd scripts
-```
-
-
-End with an example of getting some data out of the system or using it for a little demo
 
 ## Input Data
 | Parameter                   | Directory Name | Description                                                                  |
