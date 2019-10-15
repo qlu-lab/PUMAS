@@ -8,15 +8,15 @@ Our project gives...
 ### Prerequisites
 
 The following R packages are required
-devtools
-PRS-Fine-tuning (Our package)
+##### devtools
+##### PRS-Fine-tuning (Our package)
 
 If you don't have devtools installed, please install as following
-Mac and Linux:
+##### Mac and Linux:
 ```
 devtools::install_github("hadley/devtools")
 ```
-Windows:
+##### Windows:
 ```library(devtools)
 build_github_devtools()
 
