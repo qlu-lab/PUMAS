@@ -48,7 +48,7 @@ We requires an input file in a form of csv including those values. The file name
 | Se              | data.real$SE        |                         |                                                    
 | Sample          |N.sample=766345 | Sample size that we are interested in |
 | Res_TildeRL         |results by FunII.TildeRL |   |
-| P-value        |--p_val | The cutoff value|
+| P-value        |--p_val | The cutoff value |
 
 
 
