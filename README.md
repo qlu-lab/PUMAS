@@ -32,8 +32,9 @@ library(devtools)
 ```
 
 ### Step 0
-Downloading the following libraries on working directory
+Downloading PRS-Fine-tuning on working directory
 
+In R, type the following command in console
 ```
 install_github("qlu-lab/PRS-Fine-tuning/PRS-Fine-tuning")
 ```
@@ -51,11 +52,10 @@ We requires an input file in a form of csv including those values. The file name
 | Res_TildeRL         |results by FunII.TildeRL |   |
 | P-value        |--p_val | The cutoff value |
 
+The input line should be in /Your-Wokring-directory/PRS-Fine-tuning/R
 
 
 ### Step 1
-
-Ask users to create folder results
 ```
 mkdir results
 ```
