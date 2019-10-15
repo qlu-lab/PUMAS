@@ -41,6 +41,7 @@ install_github("qlu-lab/PRS-Fine-tuning/PRS-Fine-tuning")
 
 ## Input Data
 We requires an input file in a form of csv including those values. The file name is T0030_pruned.txt in our case.
+
 | Parameter                   | Parameter Usage | Description                                                                  |
 |----------------------------|----------------|------------------------------------------------------------------------------|
 | Beta            |  data.real$Beta     |  |
