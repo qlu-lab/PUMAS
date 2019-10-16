@@ -8,8 +8,8 @@ Our project gives user-friendly function that presents a direct and explicit res
 ### Prerequisites
 
 The following R packages are required
-##### devtools
-##### PRS-Fine-tuning (Our package)
+`devtools`
+ `PRS-Fine-tuning` (Our package)
 
 If you don't have devtools installed, please install as following
 ##### Mac and Linux:
