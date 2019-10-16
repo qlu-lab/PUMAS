@@ -1,35 +1,12 @@
-set.seed(0)
-
-##################################################
-data.real <- read.table(paste0("/PRS-Fine-tuning/PRS-Fine-tuning/input/T0030_pruned.txt"), header=T,na.strings=c("na","NA",""))
-data.real=na.omit(data.real)
-
-beta=data.real$Beta
-MAF=data.real$EAF
-se=data.real$SE
-N.sample=766345
-X_VAR=2*MAF*(1-MAF)
-
-
-#p-value selection
-p.value=data.real$Pval
-p.value=p.value[order(p.value,decreasing=F)]
-index.cons = which(p.value<0.0001)
-p.value=p.value[-index.cons]
-
-Res_TildeRL <- FunII.TildeRL(FunII.beta=beta,FunII.SE=se,FunII.sigma=X_VAR,FunII.N.samplesize=N.sample,FunII.Nv=0.25*N.sample,FunII.rep=4, FunII.Corr=F)
-#p-value selection
-Res_TildeRL=Res_TildeRL[-index.cons]
-
-png(paste0("/PRS-Fine-tuning/PRS-Fine-tuning/result/T0030_pruned.png"),units="in",width = 9,height = 5,res = 300)
-plot(y=Res_TildeRL,x=log(p.value,base=10),main=paste0("T0030_pruned"),ylab="COR^2",xlab="log(P-value)")
-points(y=max(Res_TildeRL),x=log(p.value,base=10)[which(Res_TildeRL==max(Res_TildeRL))],col="red", pch=19)
-abline(v=log(p.value,base=10)[which(Res_TildeRL==max(Res_TildeRL))],col="red",lty=2)
-text(labels=paste0(p.value[which(Res_TildeRL==max(Res_TildeRL))]),y=0,x=log(p.value,base=10)[which(Res_TildeRL==max(Res_TildeRL))],pos=3,col="red")
-
-dev.off()
-
-
+FunI.plot<-function(Res_TildeRL,p.value){
+  png(paste0("/PRS-Fine-tuning/PRS-Fine-tuning/result/T0030_pruned.png"),units="in",width = 9,height = 5,res = 300)
+  plot(y=Res_TildeRL,x=log(p.value,base=10),main=paste0("T0030_pruned"),ylab="COR^2",xlab="log(P-value)")
+  points(y=max(Res_TildeRL),x=log(p.value,base=10)[which(Res_TildeRL==max(Res_TildeRL))],col="red", pch=19)
+  abline(v=log(p.value,base=10)[which(Res_TildeRL==max(Res_TildeRL))],col="red",lty=2)
+  text(labels=paste0(p.value[which(Res_TildeRL==max(Res_TildeRL))]),y=0,x=log(p.value,base=10)[which(Res_TildeRL==max(Res_TildeRL))],pos=3,col="red")
+  
+  dev.off()
+}
 ### ---  Funtion File ---###
 
 #--- Prediction Error: --->
@@ -69,7 +46,6 @@ FunI.PEtilde<-function(FunI.XtY.tr, FunI.XtY.v, FunI.ntr, FunI.nv, FunI.Sigma,Fu
     FunI.PE <- cumsum(FunI.PE.term2) + diag(apply(apply(FunI.PE.term3,2,cumsum),1,cumsum))
   }
   
-  return(FunI.Cor.squared)
   #return(list(beta.tilde=FunI.beta_tilde,term2=cumsum(FunI.PE.term2),term3=cumsum(FunI.PE.term3),PE=FunI.PE))
 }
 
@@ -82,8 +58,6 @@ FunI.PEtilde<-function(FunI.XtY.tr, FunI.XtY.v, FunI.ntr, FunI.nv, FunI.Sigma,Fu
 #***    FunII.N.samplesize is total sample size for every SumStat, can be either a number or vector;
 #***    FunII.Ntr is a number for how large sample size is used to train, which is smaller than max(FunII.N.samplesize)
 #***    FunII.rep is a number for repeated-learning.
-
-
 FunII.TildeRL<-function(FunII.beta, FunII.SE, FunII.sigma, FunII.N.samplesize, FunII.Nv, FunII.rep, FunII.Corr=F){
   if(length(FunII.N.samplesize)==1){
     FunII.N.samplesize <- rep(FunII.N.samplesize, length(FunII.beta))
@@ -102,9 +76,7 @@ FunII.TildeRL<-function(FunII.beta, FunII.SE, FunII.sigma, FunII.N.samplesize, F
   }
   
   FunII.XtY <- FunII.beta*FunII.N.samplesize*FunII.sigma.diag
-  #FunII.Var.Y=max(FunII.SE^2*FunII.Ntr*FunII.sigma.diag)
   FunII.Var.Y=quantile(FunII.SE^2*FunII.N.samplesize*FunII.sigma.diag,probs=seq(0,1,0.1))[10]
-  #FunII.Var.Y=var(y)
   FunII.PErr.Avg <- rep(0, length(FunII.beta))
   
   if (FunII.Corr==F){
@@ -151,10 +123,35 @@ FunII.TildeRL<-function(FunII.beta, FunII.SE, FunII.sigma, FunII.N.samplesize, F
       }
     }
   }
-  
-  #--- Return Res ---#
-  #return(list(PETilde.orderd=FunII.PErr.Avg,
-  #p.tilde=which.min(FunII.PErr.Avg)))
   return(FunII.PErr.Avg)
 }
+
+
+
+set.seed(0)
+
+##################################################
+data.real <- read.table(paste0("/PRS-Fine-tuning/PRS-Fine-tuning/input/T0030_pruned.txt"), header=T,na.strings=c("na","NA",""))
+data.real=na.omit(data.real)
+
+beta=data.real$Beta
+MAF=data.real$EAF
+se=data.real$SE
+N.sample=766345
+X_VAR=2*MAF*(1-MAF)
+
+
+#p-value selection
+p.value=data.real$Pval
+p.value=p.value[order(p.value,decreasing=F)]
+index.cons = which(p.value<0.0001)
+p.value=p.value[-index.cons]
+
+Res_TildeRL <- FunII.TildeRL(FunII.beta=beta,FunII.SE=se,FunII.sigma=X_VAR,FunII.N.samplesize=N.sample,FunII.Nv=0.25*N.sample,FunII.rep=4, FunII.Corr=F)
+#p-value selection
+Res_TildeRL=Res_TildeRL[-index.cons]
+FunI.plot(Res_TildeRL=Res_TildeRL,p.value=p.value);
+
+
+
 
