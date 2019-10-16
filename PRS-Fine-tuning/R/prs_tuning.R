@@ -150,7 +150,7 @@ p.value=p.value[-index.cons]
 Res_TildeRL <- FunII.TildeRL(FunII.beta=beta,FunII.SE=se,FunII.sigma=X_VAR,FunII.N.samplesize=N.sample,FunII.Nv=0.25*N.sample,FunII.rep=4, FunII.Corr=F)
 #p-value selection
 Res_TildeRL=Res_TildeRL[-index.cons]
-FunI.plot(Res_TildeRL=Res_TildeRL,p.value=p.value);
+FunI.plot(Res_TildeRL=Res_TildeRL,p.value=p.value)
 
 
 
