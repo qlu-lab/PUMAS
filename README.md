@@ -3,13 +3,13 @@ Fine-tuning polygenic risk score models using GWAS summary statistics
 
 ## Introduction
 
-Our project gives user-friendly function that presents a direct and explicit result of fine-tuning polygenic risk score models. For full explanation and tutorail, please go to  [wiki](https://github.com/qlu-lab/PRS-Fine-tuning/wiki)
+Our project gives user-friendly function that presents a direct and explicit result of fine-tuning polygenic risk score models. For full explanation and tutorial, please go to  [wiki](https://github.com/qlu-lab/PRS-Fine-tuning/wiki)
 
 ### Prerequisites
-
+R
 The following R packages are required
 `devtools`
- `PRS-Fine-tuning` (Our package)
+`PRS-Fine-tuning` 
 
 If you don't have devtools installed, please install as following
 ##### Mac and Linux:
