@@ -52,17 +52,21 @@ We requires an input file in a form of csv including those values. The file name
 | Res_TildeRL         |results by FunII.TildeRL |   |
 | P-value        |--p_val | The cutoff value |
 
-The input line should be in /Your-Wokring-directory/PRS-Fine-tuning/R
+The input line should be in /Your-Wokring-directory/PRS-Fine-tuning/input
 
+## Output Data
+The output will be a png file, for full interpretations please see details in wiki page.
 
 ### Step 1
+After loading the library devtools and downloading our libraries.
+
 ```
-mkdir results
+devtools::load_all(PRSFinetuning)
 ```
+If you are having trouble with working directory, go to menu of R > Build > Load All
 
 ### Step 2
-Run p-value fine-tuning
-
+Choose whether you needs a output graph saved to /Your-Wokring-directory/PRS-Fine-tuning/output
 ```
 
 ```
