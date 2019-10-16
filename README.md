@@ -3,7 +3,7 @@ Fine-tuning polygenic risk score models using GWAS summary statistics
 
 ## Introduction
 
-Our project gives...
+Our project gives user-friendly function that presents a direct and explicit result of fine-tuning polygenic risk score models. For full explanation and tutorail, please go to  [wiki](https://github.com/qlu-lab/PRS-Fine-tuning/wiki)
 
 ### Prerequisites
 
@@ -45,9 +45,9 @@ We requires an input file in a form of csv including those values. The file name
 
 | Parameter                   | Parameter Usage | Description                                                                  |
 |----------------------------|----------------|------------------------------------------------------------------------------|
-| Beta            |  data.real$Beta     |  |
-| MAF         | data.real$EAF          |         |
-| Se              | data.real$SE        |                         |                                                    
+| Beta            |  data.real$Beta     |  Beta value retrieved from GWAS|
+| MAF         | data.real$EAF          |    Minor allele frequency retrieved from GWAS      |
+| Se              | data.real$SE        |       Standard Error  retrieved from GWAS             |                                         
 | Sample          |N.sample=766345 | Sample size that we are interested in |
 | Res_TildeRL         |results by FunII.TildeRL |   |
 | P-value        |--p_val | The cutoff value |
@@ -67,8 +67,9 @@ devtools::load_all(PRSFinetuning)
 If you are having trouble with working directory, go to menu of R > Build > Load All
 
 ### Step 2
-Choose whether you needs a output graph saved to /Your-Wokring-directory/PRS-Fine-tuning/output
+Giving input infortion to do an analysis from our package, in our example, we combine all data input into one file called 'submit.R', see details in [wiki](https://github.com/qlu-lab/PRS-Fine-tuning/wiki) 
 ```
+submit.R
 
 ```
 
