@@ -56,6 +56,7 @@ The input line should be in /Your-Wokring-directory/PRS-Fine-tuning/input
 
 ## Output Data
 The output will be a png file, for full interpretations please see details in wiki page.
+![Test Image 4](https://github.com/tograh/testrepository/3DTest.png)
 
 ### Step 1
 After loading the library devtools and downloading our libraries.
