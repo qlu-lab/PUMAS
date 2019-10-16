@@ -80,7 +80,7 @@ See also the list of [contributors](##) who participated in this project.
 
 ## License
 
-All rights reserved for Lu-Laboratory
+All rights reserved for [Lu-Laboratory](http://qlu-lab.org/)
 
 ## Acknowledgments
 
