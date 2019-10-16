@@ -49,7 +49,7 @@ We requires an input file in a form of csv including those values. The file name
 | MAF         | data.real$EAF          |    Minor allele frequency retrieved from GWAS      |
 | Se              | data.real$SE        |       Standard Error  retrieved from GWAS             |                                         
 | Sample          |N.sample=766345 | Sample size that we are interested in |
-| Res_TildeRL         |results by FunII.TildeRL |   |
+| Res_TildeRL         |FunII.TildeRL |  results by FunII.TildeR |
 | P-value        |--p_val | The cutoff value |
 
 The input line should be in /Your-Wokring-directory/PRS-Fine-tuning/input
