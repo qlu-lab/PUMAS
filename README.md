@@ -67,10 +67,9 @@ devtools::load_all(PRSFinetuning)
 If you are having trouble with working directory, go to menu of R > Build > Load All
 
 ### Step 2
-Giving input infortion to do an analysis from our package, in our example, we combine all data input into one file called 'submit.R', see details in [wiki](https://github.com/qlu-lab/PRS-Fine-tuning/wiki) 
+Giving input infortion to do an analysis from our package. In our example, we combine all data input into one file called 'submit.R', see details in [wiki](https://github.com/qlu-lab/PRS-Fine-tuning/wiki) 
 ```
 submit.R
-
 ```
 
 
