@@ -32,11 +32,11 @@ library(devtools)
 ```
 
 ### Step 0
-Downloading PRS-Fine-tuning on working directory
+Downloading PUMAS on working directory
 
 In R, type the following command in console
 ```
-install_github("qlu-lab/PRS-Fine-tuning/PRS-Fine-tuning")
+install_github("qlu-lab/PUMAS")
 ```
 
 
@@ -52,7 +52,7 @@ We requires an input file in a form of csv including those values. The file name
 | Res_TildeRL         |FunII.TildeRL |  results by FunII.TildeR |
 | P-value        |--p_val | The cutoff value |
 
-The input line should be in /Your-Wokring-directory/PRS-Fine-tuning/input
+The input line should be in /Your-Wokring-directory/PUMAS/input
 
 ## Output Data
 The output will be a png file, for full interpretations please see details in [wiki](https://github.com/qlu-lab/PRS-Fine-tuning/wiki) page.
@@ -62,12 +62,12 @@ The output will be a png file, for full interpretations please see details in [w
 After loading the library devtools and downloading our libraries.
 
 ```
-devtools::load_all(PRSFinetuning)
+devtools::load_all(PUMAS)
 ```
 If you are having trouble with working directory, go to menu of R > Build > Load All
 
 ### Step 2
-Giving input infortion to do an analysis from our package. In our example, we combine all data input into one file called 'submit.R', see details in [wiki](https://github.com/qlu-lab/PRS-Fine-tuning/wiki) 
+Giving input infortion to do an analysis from our package. In our example, we combine all data input into one file called 'submit.R', see details in [wiki](https://github.com/qlu-lab/PUMAS/wiki) 
 ```
 submit.R
 ```
