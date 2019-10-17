@@ -17,7 +17,6 @@ X_VAR=2*MAF*(1-MAF)
 p.value=data.real$Pval
 p.value=p.value[order(p.value,decreasing=F)]
 index.cons = which(p.value<0.0001)
-p.value=p.value[-index.cons]
 
 Res_TildeRL <- FunII.TildeRL(FunII.beta=beta,FunII.SE=se,FunII.sigma=X_VAR,FunII.N.samplesize=N.sample,FunII.Nv=0.25*N.sample,FunII.rep=4, FunII.Corr=F)
 #p-value selection
