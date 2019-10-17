@@ -1,4 +1,4 @@
-# PRS-Fine-tuning
+# PUMAS
 Fine-tuning polygenic risk score models using GWAS summary statistics
 
 ## Introduction
