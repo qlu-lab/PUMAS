@@ -67,9 +67,9 @@ devtools::load_all(PUMAS)
 If you are having trouble with working directory, go to menu of R > Build > Load All
 
 ### Step 2
-Giving input infortion to do an analysis from our package. In our example, we combine all data input into one file called 'submit.R', see details in [wiki](https://github.com/qlu-lab/PUMAS/wiki) 
+Giving input infortion to do an analysis from our package. In our example,, see details in [wiki](https://github.com/qlu-lab/PUMAS/wiki) 
 ```
-submit.R
+pumas.main("/working-directory/pumas/input/T0030_pruned.txt","Beta","EAF","SE",766345,TRUE)
 ```
 
 
