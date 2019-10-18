@@ -1,5 +1,5 @@
 FunI.plot<-function(Res_TildeRL,p.value){
-  png(paste0("/Users/yupeilin/PRS-Fine-tuning/result/T0030_pruned.png"),units="in",width = 9,height = 5,res = 300)
+  png(paste0("/PUMAS/PRS-Fine-tuning/result/T0030_pruned.png"),units="in",width = 9,height = 5,res = 300)
   plot(y=Res_TildeRL,x=log(p.value,base=10),main=paste0("T0030_pruned"),ylab="COR^2",xlab="log(P-value)")
   points(y=max(Res_TildeRL),x=log(p.value,base=10)[which(Res_TildeRL==max(Res_TildeRL))],col="red", pch=19)
   abline(v=log(p.value,base=10)[which(Res_TildeRL==max(Res_TildeRL))],col="red",lty=2)
