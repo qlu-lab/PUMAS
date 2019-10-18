@@ -1,4 +1,4 @@
-source("/Users/yupeilin/PRS-Fine-tuning/R/pumas.R")
+source("PUMAS/PRS-Fine-tuning/R/pumas.R")
 set.seed(0)
 
 
