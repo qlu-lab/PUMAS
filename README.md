@@ -79,6 +79,12 @@ See also the list of [contributors](##) who participated in this project.
 
 All rights reserved for [Lu-Laboratory](http://qlu-lab.org/)
 
+## Citation
+
+If you use the package, please cite
+
+[Zhao, Z. et al. Fine-tuning Polygenic Risk Scores with GWAS Summary Statistics. bioRxiv, 810713 (2019).](https://www.biorxiv.org/content/10.1101/810713v1)
+
 ## Acknowledgments
 
 
