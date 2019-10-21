@@ -53,7 +53,7 @@ If you are having trouble with working directory, after downloading the package 
 ### Step 2
 Giving input infortion to do an analysis from our package in R console. In our example, see details in [wiki](https://github.com/qlu-lab/PUMAS/wiki) 
 ```
-pumas.main("/working-directory-to-input/T0030_pruned.txt","Beta","EAF","SE",766345,TRUE)
+pumas.main("/working-directory-to-input/T0030_pruned.txt","/working-directory-to-output/T0030_pruned.png","Beta","EAF","SE",766345,TRUE)
 ```
 
 ## Input Data
