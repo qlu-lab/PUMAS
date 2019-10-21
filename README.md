@@ -40,21 +40,7 @@ install_github("qlu-lab/PUMAS")
 ```
 
 
-## Input Data
-We requires an input file in a form of csv including those values. The file name is T0030_pruned.txt in our case.
 
-| Parameter                   | Parameter Usage | Description                                                                  |
-|----------------------------|----------------|------------------------------------------------------------------------------|
-| Beta            |  data.real$Beta     |  Beta value retrieved from GWAS|
-| MAF         | data.real$EAF          |    Minor allele frequency retrieved from GWAS      |
-| Se              | data.real$SE        |       Standard Error  retrieved from GWAS             |                                         
-| Sample          |N.sample=766345 | Sample size that we are interested in |
-
-The input line should be in /Your-Wokring-directory/PUMAS/input
-
-## Output Data
-The output will be a png file, for full interpretations please see details in [wiki](https://github.com/qlu-lab/PRS-Fine-tuning/wiki) page.
-![Test Image 4](https://github.com/qlu-lab/PUMAS/blob/master/result/T0030_pruned.png)
 
 ### Step 1
 After loading the library devtools and downloading our libraries.
@@ -70,6 +56,21 @@ Giving input infortion to do an analysis from our package. In our example, see d
 pumas.main("/working-directory-to-input/T0030_pruned.txt","Beta","EAF","SE",766345,TRUE)
 ```
 
+## Input Data
+We requires an input file in a form of csv including those values. The file name is T0030_pruned.txt in our case.
+
+| Parameter                   | Parameter Usage | Description                                                                  |
+|----------------------------|----------------|------------------------------------------------------------------------------|
+| Beta            |  data.real$Beta     |  Beta value retrieved from GWAS|
+| MAF         | data.real$EAF          |    Minor allele frequency retrieved from GWAS      |
+| Se              | data.real$SE        |       Standard Error  retrieved from GWAS             |                                         
+| Sample          |N.sample=766345 | Sample size that we are interested in |
+
+The input line should be in /Your-Wokring-directory/PUMAS/input
+
+## Output Data
+The output will be a png file, for full interpretations please see details in [wiki](https://github.com/qlu-lab/PRS-Fine-tuning/wiki) page.
+![Test Image 4](https://github.com/qlu-lab/PUMAS/blob/master/result/T0030_pruned.png)
 
 ## Authors
 
