@@ -1,4 +1,4 @@
-pumas.main<-function(input_path, beta_header,maf_header,se_header, sample_size,flag_plot){
+pumas.main<-function(input_path,output_path, beta_header,maf_header,se_header, sample_size,flag_plot){
   data.real <- read.table(paste0(input_path), header=T,na.strings=c("na","NA",""))
   data.real=na.omit(data.real)
   if (!is.character(beta_header)){stop(print("beta header should be a character"))}
@@ -23,8 +23,8 @@ pumas.main<-function(input_path, beta_header,maf_header,se_header, sample_size,f
   
 }
 
-FunI.plot<-function(Res_TildeRL,p.value){
-  png(paste0("/Users/yupeilin/pumas/result/T0030_pruned.png"),units="in",width = 9,height = 5,res = 300)
+FunI.plot<-function(Res_TildeRL,p.value,output_path){
+  png(paste0(output_path),units="in",width = 9,height = 5,res = 300)
   plot(y=Res_TildeRL,x=log(p.value,base=10),main=paste0("T0030_pruned"),ylab="COR^2",xlab="log(P-value)")
   points(y=max(Res_TildeRL),x=log(p.value,base=10)[which(Res_TildeRL==max(Res_TildeRL))],col="red", pch=19)
   abline(v=log(p.value,base=10)[which(Res_TildeRL==max(Res_TildeRL))],col="red",lty=2)
