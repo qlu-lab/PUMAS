@@ -66,7 +66,7 @@ We requires an input file in a form of csv including those values. The file name
 | Se              | data.real$SE        |       Standard Error  retrieved from GWAS             |                                         
 | Sample          |N.sample=766345 | Sample size that we are interested in |
 
-The input line should be in /Your-Wokring-directory/PUMAS/input
+In our example, the input line should be in /Your-Wokring-directory/PUMAS/input
 
 ## Output Data
 The output will be a png file, for full interpretations please see details in [wiki](https://github.com/qlu-lab/PRS-Fine-tuning/wiki) page.
