@@ -18,7 +18,7 @@ pumas.main<-function(input_path,output_path, beta_header,maf_header,se_header, s
   
   Res_TildeRL <- FunII.TildeRL(FunII.beta=beta,FunII.SE=se,FunII.sigma=X_VAR,FunII.N.samplesize=N.sample,FunII.Nv=0.25*N.sample,FunII.rep=4, FunII.Corr=F)
   
-  if(flag_plot){FunI.plot(Res_TildeRL=Res_TildeRL,p.value=p.value)}
+  if(flag_plot){FunI.plot(Res_TildeRL=Res_TildeRL,p.value=p.value,output_path = output_path)}
   
   
 }
