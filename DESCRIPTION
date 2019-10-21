@@ -1,0 +1,8 @@
+Package: pumas
+Title: pumas
+Description: To tackle this problem
+Version: 0.0
+License:
+Author: test <test@example.com>
+Maintainer: test <test@example.com>
+RoxygenNote: 6.1.1
