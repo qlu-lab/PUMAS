@@ -1,4 +1,4 @@
-source("/Users/yupeilin/pumas/R/pumas.R")
+source("PUMAS-master/R/pumas.R")
 set.seed(0)
 
 
