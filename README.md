@@ -62,7 +62,7 @@ We requires an input file in a form of csv including those values. The file name
 | Parameter                   | Parameter Usage | Description                                                                  |
 |----------------------------|----------------|------------------------------------------------------------------------------|
 | Beta            |  data.real$Beta     |  Beta value retrieved from GWAS|
-| MAF         | data.real$EAF          |    Minor allele frequency retrieved from GWAS      |
+| AF         | data.real$EAF          |    Allele frequency retrieved from GWAS      |
 | Se              | data.real$SE        |       Standard Error  retrieved from GWAS             |                                         
 | Sample          |N.sample=766345 | Sample size that we are interested in |
 
