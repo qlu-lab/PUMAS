@@ -3,7 +3,7 @@ Fine-tuning polygenic risk score models using GWAS summary statistics
 
 ## Updates
 
-Last update: 10/25/2019, Please clone the repo to local in order to build and load 10/26/2019 4:53
+Last update: 10/25/2019, Please clone the repo to local in order to build and load 10/26/2019 4:53 \
 Last update: 10/25/2019. Please update the package if downloaded before 10/25/2019 2:12am CT.
 
 ## Introduction
