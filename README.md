@@ -1,6 +1,10 @@
 # PUMAS
 Fine-tuning polygenic risk score models using GWAS summary statistics
 
+## Updates
+
+Last update: 10/25/2019. Please update the package if downloaded before 10/25/2019 5:00am.
+
 ## Introduction
 
 Our project gives user-friendly function that presents a direct and explicit result of fine-tuning polygenic risk score models. For full explanation and tutorial, please go to  [wiki](https://github.com/qlu-lab/PRS-Fine-tuning/wiki)
@@ -56,21 +60,45 @@ Giving input infortion to do an analysis from our package in R console. In our e
 pumas.main("/working-directory-to-input/T0030_pruned.txt","/working-directory-to-output/T0030_pruned.png","Beta","EAF","SE",766345,TRUE)
 ```
 
+# Quick Start
+
 ## Input Data
-We requires an input file in a form of csv including those values. The file name is T0030_pruned.txt in our case.
+The function requires an input GWAS summary statistics file in the form of .txt/.txt.gz. The GWAS summary data should include:
 
-| Parameter                   | Parameter Usage | Description                                                                  |
+| Parameter                   | Example | Description                                                                  |
 |----------------------------|----------------|------------------------------------------------------------------------------|
-| Beta            |  data.real$Beta     |  Beta value retrieved from GWAS|
-| AF         | data.real$EAF          |    Either allele/minor allele frequency retrieved from GWAS      |
-| Se              | data.real$SE        |       Standard Error  retrieved from GWAS             |                                         
-| Sample          |N.sample=766345 | Sample size that we are interested in |
+| input_path            | "input/T0030_pruned.txt"    |  GWAS path |
+| beta_header            |  Beta    |  Effect size |
+| af_header         | EAF         |    Either allele/minor allele frequency      |
+| se_header              | SE        |       Standard error             |    
+| pvalue_header              | Pval        |       P-value             |   
+| samplesize_header         |766345 | Sample size |
+| n_fold          |4 | Number of subsets |
 
-In our example, the input line should be in /Your-Wokring-directory/PUMAS/input
+## Optional Features
 
-## Output Data
-The output will be a png file, for full interpretations please see details in [wiki](https://github.com/qlu-lab/PRS-Fine-tuning/wiki) page.
+`samplesize_header` can be either a number or a character of column name. If the input GWAS does not include a column for per-SNP sample sizes, the user can provide a single number (usually reported along with a published GWAS) as the uniform sample size for all SNPs.
+
+`n_fold` can be user-specified. When `n_fold` is not specified, PUMAS will use a default of 4 subsets to implement the model tuning approach.
+
+## Make Plot (optional)
+
+PUMAS can output a scatterplot that illustrates a detailed pattern of the predictive performance under each PRS models. Y-axis is the predictive R2 and X-axis is log-transformed p-value cutoff for every model. To make this plot, the user needs to provide 2 more parameters to the main function:
+
+`output_path` is the path to store the plot in `.png` format. For example, `output_path='result/test.png'` is acceptable.
+
+`make_plot` is a boolean value that tells PUMAS whether to output a scatterplot. The default is `make_plot=F`.
+
+For more detailed interpretations please see details in [wiki](https://github.com/qlu-lab/PRS-Fine-tuning/wiki) page.
 ![Test Image 4](https://github.com/qlu-lab/PUMAS/blob/master/result/T0030_pruned.png)
+
+## Result
+
+PUMAS results are printed in the interface.
+### Maximal.R2
+The estimated R2 at for the best model selected.
+### Optimal.P.value
+The p-value cutoff for the best model selected.
 
 ## Authors
 
