@@ -62,6 +62,8 @@ pumas.main("/working-directory-to-input/T0030_pruned.txt","/working-directory-to
 
 # Quick Start
 
+Important: before applying PUMAS to GWAS summary statistics, the GWAS data needs to be pruned in advance. LD-pruning can be done by [PLINK](https://www.cog-genomics.org/plink/1.9/ld).
+
 ## Input Data
 The function requires an input GWAS summary statistics file in the form of .txt/.txt.gz. The GWAS summary data should include:
 
