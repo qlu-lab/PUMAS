@@ -13,7 +13,7 @@ Our project gives user-friendly function that presents a direct and explicit res
 
 
 ### Step 0
-Downloading pumas repo form this page
+Downloading pumas repo form this page by clicking `Clone or Download`
 
 
 
