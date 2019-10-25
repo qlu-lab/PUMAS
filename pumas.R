@@ -5,10 +5,10 @@
 
 #--- main function: --->
 
-pumas.main<-function(input_path,output_path=NULL, beta_header,af_header,se_header,pvalue_header,samplesize_header,n_fold=NULL,make_plot=NULL){
+pumas.main<-function(input_path,output_path=NULL,beta_header,af_header,se_header,pvalue_header,samplesize_header,n_fold=NULL,make_plot=NULL){
     
     
-    input_GWAS <- read.table(paste0(input_path),header=T,na.strings=c("na","NA",""))
+    input_GWAS = read.table(paste0(input_path),header=T,na.strings=c("na","NA",""))
     input_GWAS = na.omit(input_GWAS)
     
     
@@ -71,7 +71,7 @@ FunI.PEtilde<-function(FunI.XtY.tr, FunI.XtY.v, FunI.ntr, FunI.nv, FunI.Sigma,Fu
     if (! is.vector(FunI.XtY.v)){stop(print("X_t_Y.v should be a vector!"))}
     if (length(FunI.XtY.tr)!=length(FunI.XtY.v)){stop(print("Dimensions of training and testing summary statistics differ!"))}
     
-    FunI.beta_tilde <- (FunI.XtY.tr/FunI.ntr)/(FunI.Sigma)
+    FunI.beta_tilde = (FunI.XtY.tr/FunI.ntr)/(FunI.Sigma)
     FunI.Var.Y.Hat = cumsum(FunI.Sigma*(FunI.beta_tilde^2))
     FunI.Cov.Y_Y.Hat = cumsum(FunI.beta_tilde*(FunI.XtY.v/FunI.nv))
     FunI.Cor.squared = FunI.Cov.Y_Y.Hat^2/(FunI.Var.Y.Hat*FunI.Var.Y)
@@ -89,23 +89,23 @@ FunII.TildeRL<-function(FunII.beta, FunII.SE, FunII.sigma, FunII.N.samplesize, F
     FunII.PErr.Avg <- rep(0, length(FunII.beta))
     
     
-    FunII.Ntr <- FunII.N.samplesize-FunII.Nv
-    FunII.XtY <- FunII.beta*FunII.N.samplesize*FunII.sigma
-    FunII.Var.Y=quantile(FunII.SE^2*FunII.N.samplesize*FunII.sigma,probs=seq(0,1,0.1))[10]
+    FunII.Ntr = FunII.N.samplesize-FunII.Nv
+    FunII.XtY = FunII.beta*FunII.N.samplesize*FunII.sigma
+    FunII.Var.Y = quantile(FunII.SE^2*FunII.N.samplesize*FunII.sigma,probs=seq(0,1,0.1))[10]
     #The default for estimation of variance of Y is 90% quantile
-    FunII.VarXY <- FunII.N.samplesize*(FunII.SE^2)*(FunII.sigma^2)
+    FunII.VarXY = FunII.N.samplesize*(FunII.SE^2)*(FunII.sigma^2)
     
     
     for (FunII.r in 1:FunII.rep){
-        FunII.XtY.train.temp <- rnorm(n=length(FunII.beta), mean = (FunII.Ntr/FunII.N.samplesize)*FunII.XtY, sd = sqrt((FunII.Ntr*FunII.Nv/FunII.N.samplesize)*FunII.VarXY))
-        FunII.XtY.test.temp <- FunII.XtY - FunII.XtY.train.temp
-        FunII.Zscore.temp <- FunII.XtY.train.temp/(sqrt(FunII.N.samplesize*FunII.Ntr)*FunII.SE*FunII.sigma)
-        FunII.order.temp <- order(abs(FunII.Zscore.temp),decreasing=T)
+        FunII.XtY.train.temp = rnorm(n=length(FunII.beta), mean = (FunII.Ntr/FunII.N.samplesize)*FunII.XtY, sd = sqrt((FunII.Ntr*FunII.Nv/FunII.N.samplesize)*FunII.VarXY))
+        FunII.XtY.test.temp = FunII.XtY - FunII.XtY.train.temp
+        FunII.Zscore.temp = FunII.XtY.train.temp/(sqrt(FunII.N.samplesize*FunII.Ntr)*FunII.SE*FunII.sigma)
+        FunII.order.temp = order(abs(FunII.Zscore.temp),decreasing=T)
 
-        FunII.PErr.Avg <- FunII.PErr.Avg + FunI.PEtilde(FunI.XtY.tr=FunII.XtY.train.temp[FunII.order.temp],
-        FunI.XtY.v=FunII.XtY.test.temp[FunII.order.temp],
-        FunI.ntr=FunII.Ntr[FunII.order.temp], FunI.nv=FunII.Nv,
-        FunI.Sigma=FunII.sigma[FunII.order.temp],FunI.Var.Y=FunII.Var.Y)/FunII.rep
+        FunII.PErr.Avg = FunII.PErr.Avg + FunI.PEtilde(FunI.XtY.tr=FunII.XtY.train.temp[FunII.order.temp],
+        FunI.XtY.v = FunII.XtY.test.temp[FunII.order.temp],
+        FunI.ntr = FunII.Ntr[FunII.order.temp], FunI.nv=FunII.Nv,
+        FunI.Sigma = FunII.sigma[FunII.order.temp],FunI.Var.Y=FunII.Var.Y)/FunII.rep
     }
     return(FunII.PErr.Avg)
 }
