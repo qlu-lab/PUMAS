@@ -95,10 +95,11 @@ For more detailed interpretations please see details in [wiki](https://github.co
 ## Result
 
 PUMAS results are printed in the interface.
-### Maximal.R2
+##### Maximal.R2
 The estimated R2 at for the best model selected.
-### Optimal.P.value
+##### Optimal.P.value
 The p-value cutoff for the best model selected.
+
 
 ## Authors
 
