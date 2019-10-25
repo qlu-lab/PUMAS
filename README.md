@@ -3,8 +3,9 @@ Fine-tuning polygenic risk score models using GWAS summary statistics
 
 ## Updates
 
-Last update: 10/25/2019, Please clone the repo to local in order to build and load 10/26/2019 4:53 \
-Last update: 10/25/2019. Please update the package if downloaded before 10/25/2019 2:12am CT.
+Please clone the repo to local in order to build and load.
+
+Last update: 10/25/2019. Please update the package if downloaded before 10/26/2019 4:53pm CT.
 
 ## Introduction
 
@@ -23,7 +24,7 @@ Load our package by double click on `pumas.Rproj` and go to menu of R > Build > 
 ### Step 2
 Giving input infortion to do an analysis from our package in R console. In our example, see details in [wiki](https://github.com/qlu-lab/PUMAS/wiki) 
 ```
-pumas.main("/working-directory-to-input/T0030_pruned.txt","/working-directory-to-output/T0030_pruned.png","Beta","EAF","SE",766345,TRUE)
+pumas.main(input_path="/working-directory-to-input/T0030_pruned.txt",output_path"/working-directory-to-output/T0030_pruned.png",beta_header="Beta",af_header="EAF",se_header="SE",pvalue_header="Pval",samplesize_header=766345,make_plot=TRUE)
 ```
 
 # Quick Start
