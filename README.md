@@ -7,7 +7,7 @@ Last update: 10/25/2019. Please update the package if downloaded before 10/25/20
 
 ## Introduction
 
-Our project gives user-friendly function that presents a direct and explicit result of fine-tuning polygenic risk score models. For full explanation and tutorial, please go to  [wiki](https://github.com/qlu-lab/PRS-Fine-tuning/wiki)
+Our project gives user-friendly function that presents a direct and explicit result of fine-tuning polygenic risk score models. A quick start panel that walks through PUMAS usage is included below. For full explanation and tutorial, please go to  [wiki](https://github.com/qlu-lab/PRS-Fine-tuning/wiki)
 
 ### Prerequisites
 R
