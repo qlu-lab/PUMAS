@@ -3,56 +3,22 @@ Fine-tuning polygenic risk score models using GWAS summary statistics
 
 ## Updates
 
+Last update: 10/25/2019, Please clone the repo to local in order to build and load 10/26/2019 4:53
 Last update: 10/25/2019. Please update the package if downloaded before 10/25/2019 2:12am CT.
 
 ## Introduction
 
 Our project gives user-friendly function that presents a direct and explicit result of fine-tuning polygenic risk score models. A quick start panel that walks through PUMAS usage is included below. For full explanation and tutorial, please go to  [wiki](https://github.com/qlu-lab/PRS-Fine-tuning/wiki)
 
-### Prerequisites
-R
-The following R packages are required
-`devtools`
-`PRS-Fine-tuning` 
 
-If you don't have devtools installed, please install as following
-##### Mac and Linux:
-```
-devtools::install_github("hadley/devtools")
-```
-##### Windows:
-```library(devtools)
-build_github_devtools()
-
-#### Restart R before continuing ####
-install.packages("devtools.zip", repos = NULL)
-
-# Remove the package after installation
-unlink("devtools.zip")
-```
-Then, load the package
-```
-library(devtools)
-```
 
 ### Step 0
-Downloading PUMAS on working directory
-
-In R, type the following command in console
-```
-install_github("qlu-lab/PUMAS")
-```
-
+Downloading pumas repo form this page
 
 
 
 ### Step 1
-After loading the library devtools and downloading our libraries.
-
-```
-devtools::load_all(PUMAS)
-```
-If you are having trouble with working directory, after downloading the package from github, you can double click on `pumas.Rproj` and go to menu of R > Build > Load All
+Load our package by double click on `pumas.Rproj` and go to menu of R > Build > Load All
 
 ### Step 2
 Giving input infortion to do an analysis from our package in R console. In our example, see details in [wiki](https://github.com/qlu-lab/PUMAS/wiki) 
