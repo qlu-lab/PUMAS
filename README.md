@@ -3,7 +3,7 @@ Fine-tuning polygenic risk score models using GWAS summary statistics
 
 ## Updates
 
-Last update: 10/25/2019. Please update the package if downloaded before 10/25/2019 5:00am CT.
+Last update: 10/25/2019. Please update the package if downloaded before 10/25/2019 2:12am CT.
 
 ## Introduction
 
@@ -73,13 +73,15 @@ The function requires an input GWAS summary statistics file in the form of .txt/
 | se_header              | SE        |       Standard error             |    
 | pvalue_header              | Pval        |       P-value             |   
 | samplesize_header         |766345 | Sample size |
-| n_fold          |4 | Number of subsets |
+
 
 ## Optional Features
 
 `samplesize_header` can be either a number or a character of column name. If the input GWAS does not include a column for per-SNP sample sizes, the user can provide a single number (usually reported along with a published GWAS) as the uniform sample size for all SNPs.
 
-`n_fold` can be user-specified. When `n_fold` is not specified, PUMAS will use a default of 4 subsets to implement the model tuning approach.
+`n_fold` is the number of subsets that PUMAS partitions the complete GWAS into. For example, when `n_fold=4` PUMAS will generate the training summary statistics based on 3 subsets and calculate the testing summary statistics of the remaining 1 subset. `n_fold` can be user-specified. When `n_fold` is not specified, PUMAS will use a default of 4 subsets to implement the model tuning approach.
+
+`odds_ratio` is a boolean value that tells PUMAS whether the weight input from GWAS is effect size (quantitative) or odds ratio (binary). When `odds_ratio=T`, PUMAS asusmes that `beta_header` is the header for odds ratio and applies log-transformation on the column. The default is `odds_ratio=F`.
 
 ## Make Plot (optional)
 
