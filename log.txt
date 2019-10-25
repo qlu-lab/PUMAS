@@ -1,0 +1,7 @@
+#--- log for pumas.R updates --->
+
+2019.10.25
+	Deleted previous version and updated a new version
+	Added features:
+		1. Allow user-specified fold numbers
+		2. Allow both uniform N and a N column in the GWAS
