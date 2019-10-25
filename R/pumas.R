@@ -5,7 +5,7 @@
 
 #--- main function: --->
 
-pumas.main<-function(input_path,output_path=NULL,beta_header,af_header,se_header,pvalue_header,samplesize_header,n_fold=NULL,make_plot=NULL){
+pumas.main<-function(input_path,output_path=NULL,beta_header,af_header,se_header,pvalue_header,samplesize_header,n_fold=NULL,odds_ratio=NULL,make_plot=NULL){
   
   
   input_GWAS = read.table(paste0(input_path),header=T,na.strings=c("na","NA",""))
@@ -31,7 +31,11 @@ pumas.main<-function(input_path,output_path=NULL,beta_header,af_header,se_header
   }else{
     N.sample = input_GWAS[,samplesize_header]
   }
-  beta=input_GWAS[,beta_header]
+  if(isTRUE(odds_ratio)){
+    beta=log(input_GWAS[,beta_header])
+  }else{
+    beta=input_GWAS[,beta_header]
+  }
   af=input_GWAS[,af_header]
   se=input_GWAS[,se_header]
   pvalue=input_GWAS[,pvalue_header]
