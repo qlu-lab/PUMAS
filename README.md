@@ -22,7 +22,7 @@ Downloading pumas repo form this page by clicking `Clone or Download`
 Load our package by double click on `pumas.Rproj` and go to menu of R > Build > Load All
 
 ### Step 2
-Giving input infortion to do an analysis from our package in R console. In our example, see details in [wiki](https://github.com/qlu-lab/PUMAS/wiki) 
+Giving input information to do an analysis from our package in R console. In our example, see details in [wiki](https://github.com/qlu-lab/PUMAS/wiki) 
 ```
 pumas.main(input_path="/working-directory-to-input/T0030_pruned.txt",output_path="/working-directory-to-output/T0030_pruned.png",beta_header="Beta",af_header="EAF",se_header="SE",pvalue_header="Pval",samplesize_header=766345,make_plot=TRUE)
 ```
