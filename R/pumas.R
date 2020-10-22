@@ -5,7 +5,11 @@
 
 #--- main function: --->
 
-#' @export
+#' pumas class description
+#'
+#' @import methods
+#' @export pumas
+#' @exportClass pumas
 pumas.main<-function(input_path,output_path=NULL,beta_header,af_header,se_header,pvalue_header,samplesize_header,n_fold=NULL,odds_ratio=NULL,make_plot=NULL){
   
   
