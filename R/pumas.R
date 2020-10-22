@@ -6,7 +6,7 @@
 #--- main function: --->
 
 #' @export
-asdxyz<-function(input_path,output_path=NULL,beta_header,af_header,se_header,pvalue_header,samplesize_header,n_fold=NULL,odds_ratio=NULL,make_plot=NULL){
+pumas.main<-function(input_path,output_path=NULL,beta_header,af_header,se_header,pvalue_header,samplesize_header,n_fold=NULL,odds_ratio=NULL,make_plot=NULL){
   
   
   input_GWAS = read.table(paste0(input_path),header=T,na.strings=c("na","NA",""))
