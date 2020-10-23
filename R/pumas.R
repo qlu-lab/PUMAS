@@ -4,7 +4,6 @@
 #library(ggplot2)
 
 #--- main function: --->
-
 #' @export
 pumas.main<-function(input_path,output_path=NULL,beta_header,af_header,se_header,pvalue_header,samplesize_header,n_fold=NULL,odds_ratio=NULL,make_plot=NULL){
   
@@ -54,7 +53,6 @@ pumas.main<-function(input_path,output_path=NULL,beta_header,af_header,se_header
 
 
 #---plot function: --->
-#' @export
 FunI.plot<-function(Res_TildeRL,p.value,input_path,output_path){
   png(paste0(output_path),units="in",width = 9,height = 5,res = 300)
   plot(y=Res_TildeRL,x=log(p.value,base=10),main=paste0(input_path),ylab="R^2",xlab="log(P-value)")
@@ -70,7 +68,6 @@ FunI.plot<-function(Res_TildeRL,p.value,input_path,output_path){
 
 
 #--- Prediction Error: --->
-#' @export
 FunI.PEtilde<-function(FunI.XtY.tr, FunI.XtY.v, FunI.ntr, FunI.nv, FunI.Sigma,FunI.Var.Y){
   if (! is.vector(FunI.XtY.tr)){stop(print("X_t_Y.tr should be a vector!"))}
   if (! is.vector(FunI.XtY.v)){stop(print("X_t_Y.v should be a vector!"))}
@@ -85,7 +82,6 @@ FunI.PEtilde<-function(FunI.XtY.tr, FunI.XtY.v, FunI.ntr, FunI.nv, FunI.Sigma,Fu
 
 
 #--- Resample Summary Statistics: --->
-#' @export
 FunII.TildeRL<-function(FunII.beta, FunII.SE, FunII.sigma, FunII.N.samplesize, FunII.Nv, FunII.rep){
   
   if(length(FunII.N.samplesize)!=length(FunII.beta)){
