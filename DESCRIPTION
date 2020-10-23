@@ -5,4 +5,5 @@ Version: 0.0
 License:
 Author: test <test@example.com>
 Maintainer: test <test@example.com>
-RoxygenNote: 6.1.1
+RoxygenNote: 7.1.1
+Encoding: UTF-8
