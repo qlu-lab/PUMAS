@@ -80,6 +80,8 @@ See also the list of [contributors](##) who participated in this project.
 
 ## License
 
+This package is under MIT license.
+
 All rights reserved for [Lu-Laboratory](http://qlu-lab.org/)
 
 ## Citation
