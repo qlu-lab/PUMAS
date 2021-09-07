@@ -88,7 +88,7 @@ All rights reserved for [Lu-Laboratory](http://qlu-lab.org/)
 
 If you use the package, please cite
 
-[Zhao, Z. et al. Fine-tuning Polygenic Risk Scores with GWAS Summary Statistics. bioRxiv, 810713 (2019).](https://www.biorxiv.org/content/10.1101/810713v1)
+[Zhao, Z., Yi, Y. et al. PUMAS: fine-tuning polygenic risk scores with GWAS summary statistics. Genome Biology. 2021;22:257.](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-021-02479-9)
 
 Cite the code: [![DOI](https://zenodo.org/badge/209808756.svg)](https://zenodo.org/badge/latestdoi/209808756)
 
