@@ -26,15 +26,6 @@ stats_path <- opt$stats_path
 weight_path <- opt$weight_path
 output_path <- opt$output_path
 
-#k <- 4
-#ref_path <- "/z/Comp/lu_group/Members/zzhao/PUMAS_ext/UKB_real/genotype/UKB_hm3_small_ref"
-#trait_name <- "CAD"
-#prs_method <- c("ldpred2","prscs","lassosum")
-#xty_path <- "/z/Comp/lu_group/Members/zzhao/PUMAS_ext/UKB_real_binary_omnibus/pumas/subsampled/"
-#stats_path <- "/z/Comp/lu_group/Members/zzhao/PUMAS_ext/UKB_real_binary_omnibus/pumas/subsampled/"
-#weight_path <- "/z/Comp/lu_group/Members/zzhao/PUMAS_ext/UKB_real_binary_omnibus/pumas/posterior"
-#output_path <- "/z/Comp/lu_group/Members/zzhao/PUMAS_ext/UKB_real_binary_omnibus/pumas/r2/"
-
 
 ### functions
 
