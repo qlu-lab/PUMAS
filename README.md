@@ -1,8 +1,10 @@
 # PUMA-CUBS
 * A tutorial for PUMA-CUBS is coming soon ([paper](https://www.biorxiv.org/content/10.1101/2022.10.26.513833v1)).
 * Older version of PUMAS is available [here](https://github.com/qlu-lab/PUMAS/tree/original).
+
 ### Subsampling Input: GWAS summary statisics
 The primary input is genome-wide summary statistics in LD-score format. At minimum, this is a flat file with a header row containing the following fields:
+
 | Name | Description  |
 |----------------|------------------------------------------------------------------------------|
 | SNP | SNP identifier (rsID) |
@@ -13,13 +15,17 @@ The primary input is genome-wide summary statistics in LD-score format. At minim
 | SE  | Standard error  |    
 | P | P-value |   
 | N | Sample size |
+
 ### Evaluation Input: SNP weights
 At minimum, this is a flat file with a header row containing the following fields:
+
 | Name | Description  |
 |----------------|------------------------------------------------------------------------------|
 | SNP | SNP identifier (rsID) |
 | A1  | First allele (effect allele)  |
 | A2  | Second allele (other allele)  |
+| *weight* |  Name of weights by corresponding tuning parameter and PRS model name|
+
 ## PUMAS
 * Subsampling
 ```
@@ -42,6 +48,7 @@ Rscript ./code/PUMAS.evaluation.R \
 --weight_path <self-calculated snp weights> \
 --output_path <output folder>
 ```
+
 ## PUMA-CUBS
 * Subsampling
 ```
