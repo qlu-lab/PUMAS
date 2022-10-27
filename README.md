@@ -19,10 +19,10 @@ The input is GWAS summary statistics. This is a flat file containing at least th
 | N | Sample size |
 
 ```
-  CHR     BP      SNP             A1      A2      MAF     BETA    SE      P       N       N_case  N_con   N_imp                   N_imp_bin
-  1       779322  rs4040617       G       A       0.1353  -0.001  0.0023  0.65    592497  NA      NA      633045.158654276        3231551.21093348
-  1       785989  rs2980300       T       C       0.1473  -0.0011 0.0023  0.61    591333  NA      NA      589656.23993338 3010060.88896371
-  1       1003629 rs4075116       C       T       0.283   0.0034  0.0016  0.037   696881  NA      NA      754233.108093159        3850205.67504973
+  CHR     BP      SNP             A1      A2      MAF     BETA    SE      P       N
+  1       779322  rs4040617       G       A       0.1353  -0.001  0.0023  0.65    592497
+  1       785989  rs2980300       T       C       0.1473  -0.0011 0.0023  0.61    591333
+  1       1003629 rs4075116       C       T       0.283   0.0034  0.0016  0.037   696881
   ...
 ```
 
