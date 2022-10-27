@@ -45,14 +45,23 @@ Rscript ./code/PUMA-CUBS.evaluation.R \
 --weight_path <self-calculated weight> \
 --output_path <output folder>
 ```
-## Subsampling Input: GWAS summary statisics
+### Subsampling Input: GWAS summary statisics
 The primary input is genome-wide summary statistics in LD-score format. At minimum, this is a flat file with a header row containing the following fields:
 
-| Parameter                   | Example | Description                                                                  |
-|----------------------------|----------------|------------------------------------------------------------------------------|
-| snp_header            | SNP    |  SNP identifier (rsID) |
-| beta_header            |  BETA   |  Effect size |
-| af_header         | MAF         |    Minor allele frequency      |
-| se_header              | SE        |       Standard error             |    
-| pvalue_header              | P        |       P-value             |   
-| samplesize_header         |N | Sample size |
+| Name | Description  |
+|----------------|------------------------------------------------------------------------------|
+| SNP | SNP identifier (rsID) |
+| A1  | First allele (effect allele)  |
+| A2  | Second allele (other allele)  |
+| MAF | Minor allele frequency  |
+| BETA |  Effect size |
+| SE  | Standard error  |    
+| P | P-value |   
+| N | Sample size |
+### Evaluation Input: SNP weights
+At minimum, this is a flat file with a header row containing the following fields:
+| Name | Description  |
+|----------------|------------------------------------------------------------------------------|
+| SNP | SNP identifier (rsID) |
+| A1  | First allele (effect allele)  |
+| A2  | Second allele (other allele)  |
