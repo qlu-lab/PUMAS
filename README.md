@@ -4,7 +4,7 @@
  * Previous version of PUMAS for fine-tuning P+T/C+T PRSs is available [here](https://github.com/qlu-lab/PUMAS/tree/original).
 
 ## Input
-### Subsampling: GWAS summary statisics
+### Subsampling step
 The input is GWAS summary statistics. This is a flat file containing at least the following fields:
 
 | Name | Description  |
@@ -26,7 +26,7 @@ The input is GWAS summary statistics. This is a flat file containing at least th
   ...
 ```
 
-### Evaluation: SNP weights
+### Evaluation/Emsemble step
 A flat file with a header row containing the following fields (there can be multiple columns of SNP weights):
 
 | Name | Description  |
