@@ -16,8 +16,8 @@ option_list = list(
   make_option("--ld_path", action = "store", default = NA, type = "character"),
   make_option("--output_path", action = "store", default = NA, type = "character"),
   make_option("--chr", action = "store", default = NULL, type = "numeric"),
-  make_option("--multicore", action = "store_true", default = FALSE),
-  make_option("--cores_number", action = "store", default = detectCores(), type = "numeric")
+  make_option("--parallel", action = "store_true", default = FALSE),
+  make_option("--threads", action = "store", default = detectCores(), type = "numeric")
 )
 
 opt = parse_args(OptionParser(option_list=option_list))
@@ -28,10 +28,10 @@ gwas_path <- opt$gwas_path
 ld_path <- opt$ld_path
 output_path <- opt$output_path
 chr <- opt$chr
-multicore <- opt$multicore
-cores_number <- opt$cores_number
+parallel <- opt$parallel
+threads <- opt$threads
 
-if (!multicore) {cores_number = 1}
+if (!parallel) {threads = 1}
 
 ### functions below
 
@@ -79,7 +79,7 @@ PUMAS.II.FUN.I <- function(FunII.GWAS, FunII.Nt, FunII.LD, FunII.LD.block, trait
       eigen_decom_value <- pmax(eigen_decom$value,0)
       project_block <- eigen_decom$vector %*% diag(sqrt(eigen_decom_value))
       return(project_block)
-    }, mc.cores=cores_number)
+    }, mc.cores=threads)
 
     # sample summary statistics
     FunII.Cor.squared <- c()
@@ -138,7 +138,7 @@ match_gwas_LD <- function(gwas,LD,rs,bp=NULL){
       ld_blk_size <- length(snp.overlap)
       return(list(ld_blk=ld_blk, rs_blk=rs_blk, gwas=gwas, ld_blk_size=ld_blk_size))
     }
-  }, mc.cores=cores_number))
+  }, mc.cores=threads))
 
   new_ld_blocks <- list()
   new_rs_blocks <- list()
