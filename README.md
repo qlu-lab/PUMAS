@@ -1,6 +1,7 @@
-# PUMA-CUBS
-* A tutorial for PUMA-CUBS is coming soon ([paper](https://www.biorxiv.org/content/10.1101/2022.10.26.513833v1)).
-* Older version of PUMAS is available [here](https://github.com/qlu-lab/PUMAS/tree/original).
+# PUMAS/PUMA-CUBS
+* A tutorial for PUMA-CUBS is coming soon
+* Check out our new preprint "Optimizing and benchmarking polygenic risk scores with GWAS summary statistics" [here](https://www.biorxiv.org/content/10.1101/2022.10.26.513833v1).
+* Previous version of PUMAS for fine-tuning P+T/C+T PRSs is available [here](https://github.com/qlu-lab/PUMAS/tree/original).
 
 ### Subsampling Input: GWAS summary statisics
 The primary input is genome-wide summary statistics in LD-score format. At minimum, this is a flat file with a header row containing the following fields:
