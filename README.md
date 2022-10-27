@@ -4,7 +4,7 @@
  * Previous version of PUMAS for fine-tuning P+T/C+T PRSs is available [here](https://github.com/qlu-lab/PUMAS/tree/original).
 
 ## Input
-### Subsampling Input: GWAS summary statisics
+### Subsampling: GWAS summary statisics
 The primary input is genome-wide summary statistics in LD-score format. At minimum, this is a flat file with a header row containing the following fields:
 
 | Name | Description  |
@@ -26,7 +26,7 @@ The primary input is genome-wide summary statistics in LD-score format. At minim
   ...
 ```
 
-### Evaluation Input: SNP weights
+### Evaluation: SNP weights
 At minimum, this is a flat file with a header row containing the following fields:
 
 | Name | Description  |
