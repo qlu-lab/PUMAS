@@ -5,13 +5,13 @@
 
 ## Input
 ### Subsampling: GWAS summary statisics
-The primary input is genome-wide summary statistics in LD-score format. At minimum, this is a flat file with a header row containing the following fields:
+The input is GWAS summary statistics. This is a flat file containing at least the following fields:
 
 | Name | Description  |
 |----------------|------------------------------------------------------------------------------|
 | SNP | SNP identifier (rsID) |
-| A1  | First allele (effect allele)  |
-| A2  | Second allele (other allele)  |
+| A1  | Effective allele  |
+| A2  | Other allele  |
 | MAF | Minor allele frequency  |
 | BETA |  Effect size |
 | SE  | Standard error  |    
@@ -27,14 +27,14 @@ The primary input is genome-wide summary statistics in LD-score format. At minim
 ```
 
 ### Evaluation: SNP weights
-At minimum, this is a flat file with a header row containing the following fields:
+A flat file with a header row containing the following fields (there can be multiple columns of SNP weights):
 
 | Name | Description  |
 |----------------|------------------------------------------------------------------------------|
 | SNP | SNP identifier (rsID) |
-| A1  | First allele (effect allele)  |
-| A2  | Second allele (other allele)  |
-| *weight* |  Name of weights by corresponding tuning parameter and PRS model name|
+| A1  | Effective allele  |
+| A2  | Other allele  |
+| *weight* |  SNP weights for PRS|
 
 ```
   CHR     SNP             A1      A2      s.0.2_lambda.5e.3       s.0.2_lambda.1e.2       s.0.2_lambda.5e.2       s.0.5_lambda.5e.3       s.0.5_lambda.1e.2       s.0.5_lambda.5e.2       s.0.9_lambda.5e.3       s.0.9_lambda.1e.2      s.0.9_lambda.5e.2
