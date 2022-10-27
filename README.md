@@ -29,6 +29,8 @@ At minimum, this is a flat file with a header row containing the following field
 ## PUMAS
 * Subsampling
 ```
+LD_PATH = <ld path>
+
 Rscript ./code/PUMAS.subsampling.R \
 --k 4 \
 --partitions 0.75,0.25 \
@@ -52,6 +54,8 @@ Rscript ./code/PUMAS.evaluation.R \
 ## PUMA-CUBS
 * Subsampling
 ```
+LD_PATH = <ld path>
+
 Rscript ./code/PUMA-CUBS.subsampling.R \
 --k 4 \
 --partitions 0.6,0.2,0.1,0.1 \
