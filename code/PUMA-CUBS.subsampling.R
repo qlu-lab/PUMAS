@@ -13,6 +13,7 @@ option_list = list(
   make_option("--partitions", action = "store", default = NA, type = "character"),
   make_option("--trait_name", action = "store", default = NA, type = "character"),
   make_option("--gwas_path", action = "store", default = NA, type = "character"),
+  make_option("--ld_path", action = "store", default = NA, type = "character"),
   make_option("--output_path", action = "store", default = NA, type = "character"),
   make_option("--chr", action = "store", default = NULL, type = "numeric"),
   make_option("--multicore", action = "store_true", default = FALSE),
@@ -24,6 +25,7 @@ k <- opt$k
 partitions <- as.numeric(unlist(lapply((strsplit(opt$partitions, ',')),trimws)))
 trait_name <- opt$trait_name
 gwas_path <- opt$gwas_path
+ld_path <- opt$ld_path
 output_path <- opt$output_path
 chr <- opt$chr
 multicore <- opt$multicore
@@ -239,8 +241,8 @@ main <- function(){
     chr <- paste0(".", chr)
   }
 
-  load(paste0(LD_PATH, "/ld_1kg.RData"))
-  load(paste0(LD_PATH, "/rs_1kg.RData"))
+  load(paste0(ld_path, "/ld_1kg.RData"))
+  load(paste0(ld_path, "/rs_1kg.RData"))
     
   # match GWAS SNPs with LD reference
   matched_data <- match_gwas_LD(gwas=gwas,LD=LD_ref,rs=rs_ref,bp=NULL)
