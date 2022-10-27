@@ -26,7 +26,7 @@ The input is GWAS summary statistics. This is a flat file containing at least th
   ...
 ```
 
-### Evaluation/Emsemble step
+### Evaluation/Ensemble step
 A flat file with a header row containing the following fields (there can be multiple columns of SNP weights):
 
 | Name | Description  |
