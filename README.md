@@ -58,9 +58,9 @@ Rscript ./code/PUMAS.subsampling.R \
 
 ### Evaluate PRS performance
 After partitioning summary statistics, users can train any PRS method using the subsampled training summary statistics. Then, to use PUMAS for evaluating and fine-tuning PRS methods, three datasets are required:
-  * **Tuning summary statistics** obtained from the subsampling step
+  * **Remaining summary statistics** obtained from the subsampling step
   * **Genotype data from the LD panel**
-  * **SNP weights**. A flat `.<pre_method>.txt` file containing SNP weights for each tuning parameter in a PRS framework (there can be multiple columns of SNP weights). An example of SNP weights file look like this:
+  * **SNP weights**. A flat `.<pre_method>.txt` file containing SNP weights for each tuning parameter in a PRS framework (there can be multiple columns of SNP weights). An example of SNP weights file looks like this:
 ```
   CHR     SNP             A1      A2      s.0.2_lambda.5e.3       s.0.2_lambda.1e.2       s.0.2_lambda.5e.2       s.0.5_lambda.5e.3       s.0.5_lambda.1e.2       s.0.5_lambda.5e.2       s.0.9_lambda.5e.3       s.0.9_lambda.1e.2      s.0.9_lambda.5e.2
   1       rs4040617       G       A       0                       0                       0                       0                       0                 0                       0                       0                      0
@@ -111,7 +111,7 @@ Rscript ./code/PUMA-CUBS.subsampling.R \
   * `output_path`: folder to write partitioned GWAS summary statistics
   
 ### Construct ensemble PRS and benchmark PRS models
-Different from PUMAS's PRS evaluation function, PUMA-CUBS requires SNP weights from each PRS method to be stored in a separate `.<pre_method>.txt` file so that PUMA-CUBS can construct ensemble PRS based on fine-tuned PRS model from each method and benchmark all PRS models. After PRS model training, run:
+The required input datasets are mostly the same as PUMAS's PRS evaluation function. Different from PUMAS, PUMA-CUBS requires SNP weights from each PRS method to be stored in a separate `.<pre_method>.txt` file so that PUMA-CUBS can construct ensemble PRS based on fine-tuned PRS model from each method and benchmark all PRS models. After PRS model training, run:
 ```
 Rscript ./code/PUMA-CUBS.evaluation.R \
 --k <number of folds> \
