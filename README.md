@@ -16,6 +16,12 @@
     * `wget ftp://ftp.biostat.wisc.edu/pub/lu_group/Projects/PUMAS/LD/rs_1kg.RData`
   * **Genotype data from the LD panel**:
     * `wget ftp://ftp.biostat.wisc.edu/pub/lu_group/Projects/PUMAS/LD/1kg_hm3_QCed_noM*`
+* Install the following R dependencies by `install.packages()`:
+  * optparse
+  * data.table
+  * matrixStats
+  * BEDMatrix
+  * parallel
 
 ## Using PUMAS
 ### Subsample training and tuning summary statistics
@@ -53,7 +59,7 @@ Rscript ./code/PUMAS.subsampling.R \
   * `partitions`: subsets' sample size proportion compared to total samples (e.g., `--partitions 0.75,0.25`)
   * `trait_name`: file name of GWAS summary statistics
   * `gwas_path`: folder containing GWAS summary statistics
-  * `ld_path`: path to approximately independent LD blocks
+  * `ld_path`: folder containing approximately independent LD blocks
   * `output_path`: folder to write partitioned GWAS summary statistics
 
 ### Evaluate PRS performance
@@ -107,7 +113,7 @@ Rscript ./code/PUMA-CUBS.subsampling.R \
   * `partitions`: subsets' sample size proportion compared to total samples (e.g., `--partitions 0.6,0.2,0.1,0.1`)
   * `trait_name`: file name of GWAS summary statistics
   * `gwas_path`: folder containing GWAS summary statistics
-  * `ld_path`: path to approximately independent LD blocks
+  * `ld_path`: folder containing approximately independent LD blocks
   * `output_path`: folder to write partitioned GWAS summary statistics
   
 ### Construct ensemble PRS and benchmark PRS models
@@ -133,6 +139,26 @@ Rscript ./code/PUMA-CUBS.evaluation.R \
   * `output_path`: folder to write PRS model-tuning and benchmarking results by PUMA-CUBS
   
 ## Output
+### PUMAS
+#### Subsampling
+* `<trait_name>.gwas.ite<i>.txt`: subsampled training GWAS summary statistics in the same format of input full GWAS summary statistics
+* `<trait_name>.xty.ite<i>.txt`: subsampled tuning sammary statistics
+* `<trait_name>.forEVAL.txt`: information including variance of phenotype and each subet of suammry statistics' sample size
+
+#### PRS Evaluation
+* `<trait_name>.<prs_method>.txt`: predictive R2 for each tuning parameter within a PRS method for each fold of Monte Carlo cross-validation. Each row is a fold in MCCV and each column is a tuning parameter.
+
+### PUMA-CUBS
+#### Subsampling
+* `<trait_name>.gwas.omnibus.ite<i>.txt`: subsampled training GWAS summary statistics in the same format of input full GWAS summary statistics
+* `<trait_name>.xty.omnibus.ite<i>.txt`: subsampled tuning, ensemble training, and testing sammary statistics
+* `<trait_name>.omnibus.forEVAL.txt`: information including variance of phenotype and each subet of suammry statistics' sample size
+
+#### PRS Evaluation
+* `<trait_name>.<prs_method>.tuning.txt`: evlauted on the tuning dataset. This file includes predictive R2 for each tuning parameter within a PRS method for each fold of Monte Carlo cross-validation. Each row is a fold in MCCV and each column is a tuning parameter.
+* `<trait_name>.<prs_method>.testing.txt`: evlauted on the testing dataset. This file includes predictive R2 for each tuning parameter within a PRS method for each fold of Monte Carlo cross-validation. Each row is a fold in MCCV and each column is a tuning parameter.
+* `<trait_name>.omnibus.weights.txt`: calculated on the ensemble training dataset. This file includes the weight of each PRS method in the ensemble score. Each row is a fold in MCCV. The average weights across `k` folds of MCCV are used to construct ensemble PRS.
+* `<trait_name>.omnibus.r2.txt`: evlauted on the testing dataset. This file includes predictive R2 for ensemble PRS for each fold of Monte Carlo cross-validation. Each row is a fold in MCCV.
 
 ## Citation
 * If you use PUMAS/PUMA-CUBS, please cite:
