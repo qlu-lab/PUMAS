@@ -19,7 +19,6 @@
 * Install the following R dependencies by `install.packages()`:
   * optparse
   * data.table
-  * matrixStats
   * BEDMatrix
   * parallel
 
