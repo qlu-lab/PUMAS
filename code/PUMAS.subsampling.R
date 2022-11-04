@@ -2,9 +2,8 @@
 
 # PUMAS R2
 library(data.table)
-library(MASS)
 library(parallel)
-library(matrixStats)
+
 # Read the argument into R
 library(optparse)
 options(stringsAsFactors=F)
