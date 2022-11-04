@@ -162,8 +162,10 @@ Rscript ./code/PUMA-CUBS.evaluation.R \
 
 ## Citation
 * If you use PUMAS/PUMA-CUBS, please cite:
+  
   Zhao, Z., Gruenloh, T., Wu, Y., Sun, Z., Miao, J., Wu, Y., Song, J., & Lu, Q. (2022). [Optimizing and benchmarking polygenic risk scores with GWAS summary statistics](https://www.biorxiv.org/content/10.1101/2022.10.26.513833v1). *bioRxiv*.
 * If you use PUMAS for fine-tuning P+T/C+T PRS, pleasse cite:
+  
   Zhao, Z., Yi, Y., Song, J., Wu, Y., Zhong, X., Hohman, T.J., Fletcher, J., & Lu, Q. (2021). [PUMAS: fine-tuning polygenic risk scores with GWAS summary statistics](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-021-02479-9). *Genome Biology*, 22,257.
   
 ## Support
