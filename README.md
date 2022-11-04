@@ -145,7 +145,7 @@ Rscript ./code/PUMA-CUBS.evaluation.R \
 * `<trait_name>.xty.ite<i>.txt`: subsampled tuning sammary statistics
 * `<trait_name>.forEVAL.txt`: information including variance of phenotype and each subet of suammry statistics' sample size
 
-#### PRS Evaluation
+#### PRS Fine-tuning
 * `<trait_name>.<prs_method>.txt`: predictive R2 for each tuning parameter within a PRS method for each fold of Monte Carlo cross-validation. Each row is a fold in MCCV and each column is a tuning parameter.
 
 ### PUMA-CUBS
@@ -154,7 +154,7 @@ Rscript ./code/PUMA-CUBS.evaluation.R \
 * `<trait_name>.xty.omnibus.ite<i>.txt`: subsampled tuning, ensemble training, and testing sammary statistics
 * `<trait_name>.omnibus.forEVAL.txt`: information including variance of phenotype and each subet of suammry statistics' sample size
 
-#### PRS Evaluation
+#### Ensemble PRS construction and PRS benchmarking
 * `<trait_name>.<prs_method>.tuning.txt`: evlauted on the tuning dataset. This file includes predictive R2 for each tuning parameter within a PRS method for each fold of Monte Carlo cross-validation. Each row is a fold in MCCV and each column is a tuning parameter.
 * `<trait_name>.<prs_method>.testing.txt`: evlauted on the testing dataset. This file includes predictive R2 for each tuning parameter within a PRS method for each fold of Monte Carlo cross-validation. Each row is a fold in MCCV and each column is a tuning parameter.
 * `<trait_name>.omnibus.weights.txt`: calculated on the ensemble training dataset. This file includes the weight of each PRS method in the ensemble score. Each row is a fold in MCCV. The average weights across `k` folds of MCCV are used to construct ensemble PRS.
