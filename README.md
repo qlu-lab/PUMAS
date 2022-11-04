@@ -1,5 +1,5 @@
 # PUMAS/PUMA-CUBS
-**PUMAS** and **PUMA-CUBS** are summary-statistcis-based method to fine-tune, combine, and benchmark PRS methods using only GWAS summary statistics and a LD reference panel. If the PRS fine-tuning is the only task, please use PUMAS functions. Otherwise to achieve all three objectives, please use PUMA-CUBS. A workflow of PUMAS/PUMA-CUBS is shown below ![](https://uwmadison.app.box.com/file/1057467490776/)
+**PUMAS** and **PUMA-CUBS** are summary-statistcis-based method to fine-tune, combine, and benchmark PRS methods using only GWAS summary statistics and a LD reference panel. If the PRS fine-tuning is the only task, please use PUMAS functions. Otherwise to achieve all three objectives, please use PUMA-CUBS. A workflow of PUMAS/PUMA-CUBS is shown below ![](https://github.com/qlu-lab/PUMAS/tree/master/workflow.pdf)
 
 ## Announcements
 * We are currently preparing additional LD reference datasets.
