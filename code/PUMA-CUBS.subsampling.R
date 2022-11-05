@@ -1,11 +1,20 @@
 #!/s/bin/R35
 
 # PUMAS R2
-library(data.table)
-library(parallel)
+if(!require(data.table)){
+    install.packages("data.table")
+    library(data.table)
+}
+if(!require(parallel)){
+    install.packages("parallel")
+    library(parallel)
+}
+if(!require(optparse)){
+    install.packages("optparse")
+    library(optparse)
+}
 
 # Read the argument into R
-library(optparse)
 options(stringsAsFactors=F)
 option_list = list(
   make_option("--k", action = "store", default = NA, type = "numeric"),
