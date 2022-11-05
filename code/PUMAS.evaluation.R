@@ -1,9 +1,19 @@
 #!/s/bin/R35
 
-library(data.table)
-library(BEDMatrix,lib.loc="/ua/zzhao/R/x86_64-pc-linux-gnu-library/3.5")
+if(!require(data.table)){
+    install.packages("data.table")
+    library(data.table)
+}
+if(!require(BEDMatrix)){
+    install.packages("BEDMatrix")
+    library(BEDMatrix)
+}
+if(!require(optparse)){
+    install.packages("optparse")
+    library(optparse)
+}
+
 # Read the argument into R
-library(optparse)
 options(stringsAsFactors=F)
 option_list = list(
   make_option("--k", action = "store", default = NA, type = "numeric"),
