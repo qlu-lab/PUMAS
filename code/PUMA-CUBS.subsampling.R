@@ -243,7 +243,13 @@ match_gwas_LD <- function(gwas,LD,rs,bp=NULL){
 
 # main function
 main <- function(){
-  gwas <- fread(paste0(gwas_path,trait_name,".txt.gz"),header=T)
+  if (file.exists(paste0(gwas_path,trait_name,".txt"))) {
+    gwas <- fread(paste0(gwas_path,trait_name,".txt"),header=T)
+  } else if (file.exists(paste0(gwas_path,trait_name,".gz"))) {
+    gwas <- fread(paste0(gwas_path,trait_name,".gz"),header=T)
+  } else {
+    gwas <- fread(paste0(gwas_path,trait_name,".txt.gz"),header=T)
+  }
   if (!is.null(chr)) {
     gwas <- gwas[gwas$`CHR` == chr]
     chr <- paste0(".", chr)
