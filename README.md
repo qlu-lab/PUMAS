@@ -22,6 +22,31 @@
   * BEDMatrix
   * parallel
 
+## GWAS summary statistics preparation
+```
+Rscript ./code/gwas_qc.R \
+--file_path <raw GWAS sumstats path> \ # required
+--frq_path <> \ # required
+--snp <SNP column name> \ # required
+--a1 <A1 column name> \ # required
+--a2 <A2 column name> \ # required
+--stat <BETA/OR column name> \ # required
+--p <P column name> \ # required
+--output_path <output folder> \ # required
+--chr <CHR column name> \ # optional
+--bp <BP column name> \ # optional
+--OR \ # if stat is OR, defult BETA
+--logit \ # if the trait is binary, default not binary
+--se <SE column number> \ # optional
+--maf <MAF column number> \ # optional
+--n.total <total sample size> \ # satisfy one of sample size requirement
+--n.col <N/sample size column name> \ # satisfy one of sample size requirement
+--n.case <case sample size> \ # satisfy one of sample size requirement
+--n.con <control sample size> \ # satisfy one of sample size requirement
+--n.case.col <case sample size column name> \ # satisfy one of sample size requirement
+--n.control.col <control sample size column name> # satisfy one of sample size requirement
+```
+
 ## Using PUMAS
 ### Subsample training and tuning summary statistics
 For PUMAS/PUMA-CUBS to subsample GWAS summary statistics from a full GWAS summary-level data, two datasets are requried:
@@ -96,31 +121,6 @@ Rscript ./code/PUMAS.evaluation.R \
   * `output_path`: folder to write PRS evalation and model-tuning results by PUMAS
   
 ## Using PUMA-CUBS
-
-### GWAS summary statistics preparation
-```
-Rscript ./code/gwas_qc.R \
---file_path <raw GWAS sumstats path> \ # required
---frq_path <> \ # required
---snp <SNP column name> \ # required
---a1 <A1 column name> \ # required
---a2 <A2 column name> \ # required
---stat <BETA/OR column name> \ # required
---p <P column name> \ # required
---output_path <output folder> \ # required
---chr <CHR column name> \ # optional
---bp <BP column name> \ # optional
---OR \ # if stat is OR, defult BETA
---logit \ # if the trait is binary, default not binary
---se <SE column number> \ # optional
---maf <MAF column number> \ # optional
---n.total <total sample size> \ # satisfy one of sample size requirement
---n.col <N/sample size column name> \ # satisfy one of sample size requirement
---n.case <case sample size> \ # satisfy one of sample size requirement
---n.con <control sample size> \ # satisfy one of sample size requirement
---n.case.col <case sample size column name> \ # satisfy one of sample size requirement
---n.control.col <control sample size column name> # satisfy one of sample size requirement
-```
 
 ### Subsample training, tuning, ensemble training, and testing summary statistics
 PUMA-CUBS uses exactly the same inputs as PUMAS. The only difference between implementation between PUMAS and PUMA-CUBS is scripting. To partition full GWAS summary statistics to four different subsets, run:
