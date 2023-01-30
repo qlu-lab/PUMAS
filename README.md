@@ -16,6 +16,8 @@
     * `wget ftp://ftp.biostat.wisc.edu/pub/lu_group/Projects/PUMAS/LD/rs_1kg.RData`
   * **Genotype data from the LD panel**:
     * `wget ftp://ftp.biostat.wisc.edu/pub/lu_group/Projects/PUMAS/LD/1kg_hm3_QCed_noM*`
+  * **Frequency data**:
+    * `wget ftp://ftp.biostat.wisc.edu/pub/lu_group/Projects/PUMAS/Freq/1kg_hm3_QCed_noM_freq.frq`
 * Install the following R dependencies by `install.packages()`:
   * optparse
   * data.table
