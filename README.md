@@ -26,7 +26,7 @@
 ```
 Rscript ./code/gwas_qc.R \
 --file_path <raw GWAS sumstats path> \ # required
---frq_path <> \ # required
+--frq_path <frequency data path> \ # required
 --snp <SNP column name> \ # required
 --a1 <A1 column name> \ # required
 --a2 <A2 column name> \ # required
