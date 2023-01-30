@@ -22,7 +22,7 @@
   * BEDMatrix
   * parallel
 
-## GWAS summary statistics preparation
+## GWAS Summary Statistics Preparation
 ```
 Rscript ./code/gwas_qc.R \
 --file_path <raw GWAS sumstats path> \ # required
