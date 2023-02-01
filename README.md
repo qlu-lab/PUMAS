@@ -25,7 +25,7 @@
   * parallel
 
 ## GWAS summary statistics preparation
-We highly recommend that users clean their summary statistics prior to applying PUMAS/PUMACUBS. We provide a GWAS sumstats QC script here. Please make sure that the input GWAS sumstats has rsID for each SNP. To run the GWAS QC script, run:
+We highly recommend that users clean their summary statistics prior to applying PUMAS/PUMACUBS. Here we provide a GWAS sumstats QC script. **Please make sure that the input GWAS sumstats has rsID for each SNP.** To use the GWAS QC script, run:
 ```
 Rscript ./code/gwas_qc.R \
 --file_path <raw GWAS sumstats path> \ # required
@@ -38,17 +38,20 @@ Rscript ./code/gwas_qc.R \
 --OR \ # use this flag if sumstats are reported as odds ratios
 --logit \ # use this flag if the sumstats come from logistic regression, regardless of whether OR or beta is reported
 --p <P column name> \ # required
---n.total <total sample size> \ # satisfy one of sample size requirement
---n.col <N/sample size column name> \ # satisfy one of sample size requirement
---n.case <case sample size> \ # satisfy one of sample size requirement
---n.con <control sample size> \ # satisfy one of sample size requirement
---n.case.col <case sample size column name> \ # satisfy one of sample size requirement
---n.control.col <control sample size column name> # satisfy one of sample size requirement
+--n.total <total sample size> \ # a number, required
+--n.col <N/sample size column name> \ # see below for detailed instruction for sample size
+--n.case <case sample size> \ # see below for detailed instruction for sample size
+--n.con <control sample size> \ # see below for detailed instruction for sample size
+--n.case.col <case sample size column name> \ # see below for detailed instruction for sample size
+--n.control.col <control sample size column name> # see below for detailed instruction for sample size
 --chr <CHR column name> \ # optional
 --bp <BP column name> \ # optional
---se <SE column number> \ # optional
---maf <MAF column number> \ # optional
+--se <SE column number> \ # optional (recommended to provide)
+--maf <MAF column number> \ # optional (recommended to provide)
 ```
+Here we outline the sample size requirement and priority for GWAS QC. Ideally GWAS sumstats contains per-SNP total sample size for linear regression association statistics and per-SNP case and control sample size for logistic regression association statistics. Therefore for linear and logistic summary statistics, users should provide one of the following sample size information with priority shown below:
+* **Linear regression**: ```n.col``` > ```n.total```
+* **Logistic regression**: ```n.case.col; n.con.col``` > ```n.case; n.con```
 
 ## Using PUMAS
 ### Subsample training and tuning summary statistics
