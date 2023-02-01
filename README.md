@@ -25,8 +25,8 @@
   * parallel
 
 ## GWAS summary statistics preparation
-```
 We highly recommend that users clean their summary statistics prior to applying PUMAS/PUMACUBS. We provide a GWAS sumstats QC script here. Please make sure that the input GWAS sumstats has rsID for each SNP. To run the GWAS QC script, run:
+```
 Rscript ./code/gwas_qc.R \
 --file_path <raw GWAS sumstats path> \ # required
 --frq_path <frequency data path> \ # required
