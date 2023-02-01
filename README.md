@@ -26,27 +26,28 @@
 
 ## GWAS summary statistics preparation
 ```
+We highly recommend that users clean their summary statistics prior to applying PUMAS/PUMACUBS. We provide a GWAS sumstats QC script here. Please make sure that the input GWAS sumstats has rsID for each SNP. To run the GWAS QC script, run:
 Rscript ./code/gwas_qc.R \
 --file_path <raw GWAS sumstats path> \ # required
 --frq_path <frequency data path> \ # required
+--output_path <output folder> \ # required
 --snp <SNP column name> \ # required
 --a1 <A1 column name> \ # required
 --a2 <A2 column name> \ # required
 --stat <BETA/OR column name> \ # required
+--OR \ # use this flag if sumstats are reported as odds ratios
+--logit \ # use this flag if the sumstats come from logistic regression, regardless of whether OR or beta is reported
 --p <P column name> \ # required
---output_path <output folder> \ # required
---chr <CHR column name> \ # optional
---bp <BP column name> \ # optional
---OR \ # if stat is OR, defult BETA
---logit \ # if the trait is binary, default not binary
---se <SE column number> \ # optional
---maf <MAF column number> \ # optional
 --n.total <total sample size> \ # satisfy one of sample size requirement
 --n.col <N/sample size column name> \ # satisfy one of sample size requirement
 --n.case <case sample size> \ # satisfy one of sample size requirement
 --n.con <control sample size> \ # satisfy one of sample size requirement
 --n.case.col <case sample size column name> \ # satisfy one of sample size requirement
 --n.control.col <control sample size column name> # satisfy one of sample size requirement
+--chr <CHR column name> \ # optional
+--bp <BP column name> \ # optional
+--se <SE column number> \ # optional
+--maf <MAF column number> \ # optional
 ```
 
 ## Using PUMAS
