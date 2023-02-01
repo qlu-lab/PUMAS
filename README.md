@@ -16,7 +16,7 @@
     * `wget ftp://ftp.biostat.wisc.edu/pub/lu_group/Projects/PUMAS/LD/rs_1kg.RData`
   * **Genotype data from the LD panel**:
     * `wget ftp://ftp.biostat.wisc.edu/pub/lu_group/Projects/PUMAS/LD/1kg_hm3_QCed_noM*`
-  * **Frequency data**:
+  * **Frequency data from the LD panel**:
     * `wget ftp://ftp.biostat.wisc.edu/pub/lu_group/Projects/PUMAS/Freq/1kg_hm3_QCed_noM_freq.frq`
 * Install the following R dependencies by `install.packages()`:
   * optparse
@@ -49,9 +49,13 @@ Rscript ./code/gwas_qc.R \
 --se <SE column number> \ # optional (recommended to provide)
 --maf <MAF column number> \ # optional (recommended to provide)
 ```
-Here we outline the sample size requirement and priority for GWAS QC. Ideally GWAS sumstats contains per-SNP total sample size for linear regression association statistics and per-SNP case and control sample size for logistic regression association statistics. Therefore for linear and logistic summary statistics, users should provide one of the following sample size information with priority shown below:
+
+### Sample size requirement
+Sample size information can be often misspecified in reported GWAS summary statistics. Ideally GWAS sumstats contain per-SNP total sample size for linear regression association statistics and per-SNP case and control sample size for logistic regression association statistics. In practice, for linear and logistic summary statistics, users should provide one of the following sample size information respectively with priority shown below:
 * **Linear regression**: ```n.col``` > ```n.total```
-* **Logistic regression**: ```n.case.col; n.con.col``` > ```n.case; n.con```
+* **Logistic regression**: ```n.case.col; n.con.col``` > ```n.case; n.con```. If users provide ```n.case; n.con```, ```n.col``` is also recommened to provide.
+
+If the sumstats don't contain any per-SNP sample size information, this script will impute sample size and conduct QC based on imputed sample size. We follow sample size imputation introduced in [Prive et al. (2022)](https://www.cell.com/hgg-advances/fulltext/S2666-2477(22)00052-5).
 
 ## Using PUMAS
 ### Subsample training and tuning summary statistics
