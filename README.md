@@ -6,7 +6,8 @@
 * Previous version of PUMAS for fine-tuning P+T/C+T PRSs is available [here](https://github.com/qlu-lab/PUMAS/tree/original).
 
 ## Version History
-* 11/04/2022: Uploaded a tutorial for PUMAS and PUMA-CUBS.
+* 11/04/2022: Upload a tutorial for PUMAS and PUMA-CUBS.
+* 01/30/2023: Upload a script and tutorial for cleaning GWAS sumamry statistics.
 
 ## Getting Started
 * Clone this repository by `git clone https://github.com/qlu-lab/PUMAS.git`
