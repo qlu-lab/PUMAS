@@ -19,6 +19,7 @@
     * `wget ftp://ftp.biostat.wisc.edu/pub/lu_group/Projects/PUMAS/LD/1kg_hm3_QCed_noM*`
   * **Frequency data from the LD panel**:
     * `wget ftp://ftp.biostat.wisc.edu/pub/lu_group/Projects/PUMAS/Freq/1kg_hm3_QCed_noM_freq.frq`
+  * If `wget` doesn't work, download the data above via [box folder](https://uwmadison.box.com/s/6yv7u8wxm6zutj7763jekdhed47kl0f1).
 * Install the following R dependencies by `install.packages()`:
   * optparse
   * data.table
