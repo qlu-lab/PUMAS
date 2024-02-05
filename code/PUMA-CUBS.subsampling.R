@@ -255,8 +255,8 @@ main <- function(){
     chr <- paste0(".", chr)
   }
 
-  load(paste0(ld_path, "/ld_1kg.RData"))
-  load(paste0(ld_path, "/rs_1kg.RData"))
+  load(paste0(ld_path, "/ld_ukb.RData"))
+  load(paste0(ld_path, "/rs_ukb.RData"))
     
   # match GWAS SNPs with LD reference
   matched_data <- match_gwas_LD(gwas=gwas,LD=LD_ref,rs=rs_ref,bp=NULL)

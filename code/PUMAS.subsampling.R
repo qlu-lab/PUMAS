@@ -99,7 +99,6 @@ PUMAS.II.FUN.I <- function(FunII.GWAS, FunII.Nt, FunII.LD, FunII.LD.block, trait
       }
       FunII.XtY.test.temp <- c()
       for (j in 1:length(FunII.LD.block)) {
-        print(j)
         XtY_mu_tmp <- XtY_mu[FunII.LD.block[[j]][1]:FunII.LD.block[[j]][2]]
         if (FunII.LD.block[[j]][1] == FunII.LD.block[[j]][2]) {
           FunII.XtY.test.temp <- c(FunII.XtY.test.temp,unlist(XtY_mu_tmp + project_mat[[j]] * rnorm(n=1,0,1)))
@@ -123,6 +122,7 @@ PUMAS.II.FUN.I <- function(FunII.GWAS, FunII.Nt, FunII.LD, FunII.LD.block, trait
     FunII.GWAS.tmp$`N` <- FunII.Ntr
 
     fwrite(FunII.GWAS.tmp,paste0(output_path,trait_name,".gwas.ite",i,chr,".txt"),col.names=T,row.names=F,sep="\t",quote=F)  
+    cat("\nOUTPUTTING .gwas.ite to : ", paste0(output_path,trait_name,".gwas.ite",i,chr,".txt"))
     
     ## write XtY
     fwrite(data.frame(CHR=FunII.GWAS$CHR,SNP=FunII.GWAS$SNP,A1=FunII.GWAS$A1,A2=FunII.GWAS$A2,test=FunII.XtY.test.temp),paste0(output_path,trait_name,".xty.ite",i,chr,".txt"),col.names=T,row.names=F,sep="\t",quote=F)  
@@ -155,7 +155,6 @@ match_gwas_LD <- function(gwas,LD,rs,bp=NULL){
   start.num <- 1
   end.num <- 0
   for (i in 1:length(match)) {
-    print(i)
     new_ld_blocks[[i]] <- match[[i]]$ld_blk
     new_rs_blocks[[i]] <- match[[i]]$rs_blk
     gwas_matched <- rbind(gwas_matched, match[[i]]$gwas)
@@ -183,8 +182,8 @@ main <- function(){
       chr <- paste0(".", chr)
     }
 
-    load(paste0(ld_path, "/ld_1kg.RData"))
-    load(paste0(ld_path, "/rs_1kg.RData"))
+    load(paste0(ld_path, "/ld_ukb.RData"))
+    load(paste0(ld_path, "/rs_ukb.RData"))
 
     # match GWAS SNPs with LD reference
     matched_data <- match_gwas_LD(gwas=gwas,LD=LD_ref,rs=rs_ref,bp=NULL)
@@ -196,6 +195,7 @@ main <- function(){
     pumas_tmp <- PUMAS.II.FUN.I(FunII.GWAS=matched_data$gwas_matched, FunII.Nt=floor(partitions[2]*min(matched_data$gwas_matched$N)),FunII.LD=matched_data$new_ld_blocks, FunII.LD.block=matched_data$ld_block_size, trait_name=trait_name, k=k, chr=chr)
 
     fwrite(data.frame(var.Y=pumas_tmp,N.t=floor(partitions[2]*min(matched_data$gwas_matched$N))),paste0(output_path,trait_name,".forEVAL",chr,".txt"),col.names=T,row.names=F,sep="\t",quote=F)
+    print("DONE RUNNING SUBSAMPLING")
 }
 
 ## execute main function

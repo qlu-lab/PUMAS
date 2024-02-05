@@ -1,8 +1,10 @@
-### functions
-
 ## calculate sumstats-based R2 for a single PRS method
 get_sumR2 <- function(XtY.t, weight, var.Y, N.t, X.ref){
+    cat("\nXtY.t: ", dim(XtY.t))
+    cat("\nweight: ", dim(weight))
+    cat("\nN.t: ", dim(N.t))
   weight <- t((t(weight) - colMeans(weight)) / apply(weight, 2, sd)) # idk why we cannot use colSds (from matrixStats)
+  cat("\nweight after transform : ", dim(weight))
   cov.Y_Y.Hat <- colSums(weight*(XtY.t/N.t))
   Y.Hat <- X.ref %*% weight
   var.Y.Hat <- apply(Y.Hat, 2, var)
@@ -48,11 +50,6 @@ single_prs <- function(prs_method){
     xty <- as.data.frame(fread(paste0(xty_path,trait_name,".xty.omnibus.ite1.txt"),header=T))
     stats.pumas <- as.data.frame(fread(paste0(stats_path,trait_name,".omnibus.forEVAL.txt"),header=T))
     
-    ## add a function here to coordinate A1/A2 between XtY and SNP weights data ##
-    
-    ## end ##
-    
-    geno.ref <- geno_ref[,match(xty$SNP,rs.geno)]
     pumas.cor2 <- c()
     for (j in 1:k) {
         xty <- fread(paste0(xty_path,trait_name,".xty.omnibus.ite",j,".txt"),header=T)
@@ -60,7 +57,7 @@ single_prs <- function(prs_method){
         snp.weight <- snp.w[, suffix]
         snp.weight[snp.weight==Inf|snp.weight==-Inf] <- 0
         snp.weight[is.na(snp.weight)] <- 0
-        pumas.cor2.tmp <- get_sumR2(XtY.t=xty$test, weight=snp.weight, var.Y=stats.pumas$var.Y, N.t=stats.pumas$N.t, X.ref=geno.ref)
+        pumas.cor2.tmp <- get_sumR2(XtY.t=xty$test, weight=snp.weight, var.Y=stats.pumas$var.Y, N.t=stats.pumas$N.t, X.ref=ref.geno)
         pumas.cor2 <- rbind(pumas.cor2,pumas.cor2.tmp)
     }
     colnames(pumas.cor2) <- suffix
@@ -75,11 +72,6 @@ single_prs_test <- function(prs_method){
     xty <- as.data.frame(fread(paste0(xty_path,trait_name,".xty.omnibus.ite1.txt"),header=T))
     stats.pumas <- as.data.frame(fread(paste0(stats_path,trait_name,".omnibus.forEVAL.txt"),header=T))
     
-    ## add a function here to coordinate A1/A2 between XtY and SNP weights data ##
-    
-    ## end ##
-    
-    geno.ref <- geno_ref[,match(xty$SNP,rs.geno)]
     pumas.cor2 <- c()
     for (j in 1:k) {
         xty <- fread(paste0(xty_path,trait_name,".xty.omnibus.ite",j,".txt"),header=T)
@@ -87,7 +79,7 @@ single_prs_test <- function(prs_method){
         snp.weight <- snp.w[, suffix]
         snp.weight[snp.weight==Inf|snp.weight==-Inf] <- 0
         snp.weight[is.na(snp.weight)] <- 0
-        pumas.cor2.tmp <- get_sumR2(XtY.t=xty$validation_test, weight=snp.weight, var.Y=stats.pumas$var.Y, N.t=stats.pumas$N.vt, X.ref=geno.ref)
+        pumas.cor2.tmp <- get_sumR2(XtY.t=xty$validation_test, weight=snp.weight, var.Y=stats.pumas$var.Y, N.t=stats.pumas$N.vt, X.ref=ref.geno)
         pumas.cor2 <- rbind(pumas.cor2,pumas.cor2.tmp)
     }
     colnames(pumas.cor2) <- suffix
@@ -105,14 +97,9 @@ omnibus_prs <- function(prs_methods){
         best_param <- c(best_param,  colnames(method_r2)[which.max(apply(method_r2,2,function(s){mean(s,na.rm=T)}))])
     }
     
-    ## add a function here to coordinate A1/A2 between XtY and SNP weights data ##
-    
-    ## end ##
-    
     # coordinate genotype and stats
     xty <- as.data.frame(fread(paste0(xty_path,trait_name,".xty.omnibus.ite1.txt"),header=T))
     stats.pumas <- as.data.frame(fread(paste0(stats_path,trait_name,".omnibus.forEVAL.txt"),header=T))
-    geno.ref <- geno_ref[,match(xty$SNP,rs.geno)]
     
     # calculate PRS weights
     pumas.weights <- c()
@@ -126,7 +113,7 @@ omnibus_prs <- function(prs_methods){
         }
         snp.w[snp.w==Inf|snp.w==-Inf] <- 0
         snp.w[is.na(snp.w)] <- 0
-        pumas.tmp <- get_omnibus_weights(XtY.vtr=xty$validation_train, weights=snp.w, N.vtr=stats.pumas$N.vtr, X.ref=geno.ref)
+        pumas.tmp <- get_omnibus_weights(XtY.vtr=xty$validation_train, weights=snp.w, N.vtr=stats.pumas$N.vtr, X.ref=ref.geno)
         pumas.weights <- rbind(pumas.weights,pumas.tmp$prs.weights)
     }
     pumas.weights.avg <- colMeans(pumas.weights)
@@ -144,7 +131,7 @@ omnibus_prs <- function(prs_methods){
         }
         snp.w[snp.w==Inf|snp.w==-Inf] <- 0
         snp.w[is.na(snp.w)] <- 0
-        pumas.tmp <- get_omnibus_sumR2(XtY.vt=xty$validation_test, weights=snp.w, prs.weights=pumas.weights.avg, var.Y=stats.pumas$var.Y, N.vt=stats.pumas$N.vt, X.ref=geno.ref)
+        pumas.tmp <- get_omnibus_sumR2(XtY.vt=xty$validation_test, weights=snp.w, prs.weights=pumas.weights.avg, var.Y=stats.pumas$var.Y, N.vt=stats.pumas$N.vt, X.ref=ref.geno)
         
         pumas.cor2 <- c(pumas.cor2,unlist(pumas.tmp$sum.R2))
     }
@@ -160,12 +147,8 @@ omnibus_prs <- function(prs_methods){
     write.table(pumas.cor2,paste0(output_path,trait_name,".omnibus.r2.txt"),col.names = T,row.names=F,quote=F,sep="\t")
 }
 
-linear_ensemble_learning <- function() {
-    ## executable
-    # read genotype for later usage
-    geno_ref <- BEDMatrix(ref_path)
-    rs.geno <- fread(paste0(ref_path,".bim"),header=F)$V2
 
+linear_ensemble_learning <- function() {
     # get single PRS method r2 separately, model tuning
     for (single_method in prs_method) {
         single_prs(single_method)
