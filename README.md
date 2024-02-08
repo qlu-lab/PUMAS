@@ -160,6 +160,7 @@ Rscript ./code/PUMA-CUBS.evaluation.R \
 --ref_path <LD ref> \
 --trait_name <trait name> \
 --prs_method <prs_methods> \
+--ensemble <ensemble_method> \
 --xty_path <subsampled sumstats folder> \
 --stats_path <statistics folder> \
 --weight_path <SNP weights> \
@@ -169,8 +170,9 @@ Rscript ./code/PUMA-CUBS.evaluation.R \
   * `ref_path`: path to the LD genotype data
   * `trait_name`: file name for all subsampled summary statistics and SNP weight txt file
   * `prs_method`: PRS methods' names (e.g., put `lassosum,prscs,ldpred2` if the SNP weights files are named `Height.lassosum.txt`,`Height.prscs.txt`, and `Height.ldpred2.txt`)
-  * `xty_path`: folder containing partitioned summary statistics from subsampling step
-  * `stats_path`: folder containing statistics from subsampling step (e.g, variance of phenotype and sample size for each sumstats)
+  * `ensemble`: the method of ensemble learning you want to do. Options are EN (ElasticNet), SL (Super Learning), or all (linear, EN, and SL ensemble methods).
+  * `xty_path`: folder containing partitioned summary statistics from the subsampling step
+  * `stats_path`: folder containing statistics from the subsampling step (e.g, variance of phenotype and sample size for each sumstats)
   * `weight_path`: folder containing SNP weights files
   * `output_path`: folder to write PRS model-tuning and benchmarking results by PUMA-CUBS
   
