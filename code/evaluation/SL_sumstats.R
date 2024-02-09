@@ -21,7 +21,6 @@ EN_sl_main <- function(X.ref, param, weight, exclude, thr){
         sd.yhat <- as.numeric(apply(Y.hat,2,sd))
         Y.hat.std <- scale(Y.hat)
         cov.yhat <- cov(Y.hat.std)
-        #prsty.train <- t(snp.weight) %*% xty.dat$test / (sqrt(stat.dat$var.Y) * stat.dat$N.t * sd.yhat)
         
         # calculate EN regression weights
         model.weights <- list()
@@ -83,9 +82,19 @@ EN_sl_main <- function(X.ref, param, weight, exclude, thr){
         prsty.test <- t(snp.weight) %*% xty.dat$validation_test / (sqrt(stat.dat$var.Y) * stat.dat$N.vt * sd.yhat)
         
         sl.model.r2 <- EN_ss_r2(prsty=prsty.test, prs.cov=cov.yhat, prs.weight=as.numeric(final.weights))
-        write.table(as.numeric(sl.model.r2),paste0(output_path, "/ite",ite,".sl.r2.txt"),col.names = F, row.names = F,sep = "\t",quote = F)
-        write.table(final.weights,paste0(output_path,"/ite",ite,".sl.weights.txt"),col.names = F, row.names = F,sep = "\n",quote = F)
+        
+        return(list(weights=final.weights,r2=sl.model.r2))
     }, mc.cores=cores)
+
+    if (!is.null(full.snp.weight)) {
+        sl.weights <- ensemble_snp_weights(ensemble.results=sl_results,weight.col="weights",prs.weight=full.snp.weight,xty.snp=xty.tmp,ite=k)
+        write.table(sl.weights,paste0(output_path,trait_name,".sl.weights.txt"),col.names = T, row.names = F,sep = "\t",quote = F)
+    }
+    sl.r2 <- c()
+    for (i in 1:k) {
+        sl.r2 <- rbind(sl.r2, sl_results[[i]]$r2)
+    }
+    write.table(sl.r2,paste0(output_path,trait_name,".sl.r2.txt"),col.names = F, row.names = F,sep = "\n",quote = F)
 }
 
 ############# main function ##############

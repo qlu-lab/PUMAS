@@ -1,22 +1,22 @@
-######### Implement Y~PRS Elastic Net Model with Sumstats ##########
+######### Helpers for Y~PRS Elastic Net and Super Learning Model with Sumstats ##########
 
 # Combine and sort SNP weights for all PRS methods
-sort_sumstats <- function(prs_methods,xty.snp){
-    #i <- 0
-    weight.mat <- mclapply(1:k, function(ite) {
+sort_sumstats <- function(prs_methods,xty.snp,iterations,full=FALSE){
+    weight.mat <- mclapply(1:iterations, function(ite) {
         weight.out <- c()
         for (prs_method in prs_methods) {
-            prs.method.weights <- as.data.frame(fread(paste0(weight_path,trait_name,".",prs_method,".ite",ite,".txt"),header=F))
-            #cat("\nPRS method: ", prs_method)
-            #print(ncol(prs.method.weights))
+            if (full) {
+                prs.method.weights <- as.data.frame(fread(paste0(full_weight_path,trait_name,".",prs_method,".txt"),header=F))
+            } else {
+                prs.method.weights <- as.data.frame(fread(paste0(weight_path,trait_name,".",prs_method,".ite",ite,".txt"),header=F))
+            }
             for (index in 3:ncol(prs.method.weights)) {
-                #i = i + 1
-                #cat("\nITE: ", i)
-                #cat("\nPRS method: ", prs_method, " number", index-2, "\n")
                 weight.out.tmp <- rep(0,nrow(xty.snp))
                 snp.tmp <- xty.snp$A1
-                weight.out.tmp[match(prs.method.weights$V1,xty.snp$SNP)] <- prs.method.weights[,index]
-                snp.tmp[match(prs.method.weights$V1,xty.snp$SNP)] <- prs.method.weights$V2
+                match_indices <- match(prs.method.weights$V1, xty.snp$SNP)
+                non_na_indices <- which(!is.na(match_indices))
+                weight.out.tmp[match_indices[non_na_indices]] <- prs.method.weights[non_na_indices,index]
+                snp.tmp[match_indices[non_na_indices]] <- prs.method.weights[non_na_indices,2]
                 weight.out.tmp <- ifelse(snp.tmp==xty.snp$A1,weight.out.tmp,-weight.out.tmp)
                 weight.out <- cbind(weight.out,weight.out.tmp)
             }
@@ -26,21 +26,6 @@ sort_sumstats <- function(prs_methods,xty.snp){
     return(weight.mat)
 }
 
-start_time <- function(name) {
-    begin.time = Sys.time()
-    cat("\n", name, " begins at ", format(begin.time, format = "%F %R %Z"), ":", sep = "", "\n\n")
-
-    return(begin.time)
-}
-
-end_time <- function(name, begin) {
-    end.time <- Sys.time()
-    total.time <- difftime(time1=end.time,time2=begin,units="sec")
-    hrs <- floor(floor(total.time)/3600)
-    mins <- floor(floor(floor(total.time) - hrs * 3600)/60)
-    secs <- total.time - hrs*3600 - mins*60
-    cat("\n", name, " ended at ", format(end.time, format = "%F %R %Z"), ". \n  Total time: ", hrs, " hours, ", mins, " minutes and ", secs, " seconds.\n\n", sep = "")
-}
 
 # calculate r2 for single PRS
 single_ss_main <- function(X.ref, snp.weight, ite){
@@ -86,9 +71,10 @@ single_ss_main <- function(X.ref, snp.weight, ite){
         model.r2.test <- c(model.r2.test, model.r2.tmp)
     }
     
-    write.table(data.frame(r2=model.r2.test),paste0(output_path,"/ite",ite,".single.r2.txt"),col.names = F, row.names = F,sep = "\t",quote = F)
+    #write.table(data.frame(r2=model.r2.test),paste0(output_path,"/ite",ite,".single.r2.txt"),col.names = F, row.names = F,sep = "\t",quote = F)
     return(data.frame(r2=as.numeric(model.r2.train),beta.sd=snp.weight.sd))
 }
+
 
 # Calculate linear regression weights
 ss_lm <- function(prsty, prs.cov){
@@ -153,4 +139,40 @@ ss_r2 <- function(prsty, prs.cov){
     
     # return values
     return(sum.R2)
+}
+
+
+# Calculate SNP weights from ensemble learning prs weights
+ensemble_snp_weights <- function(ensemble.results,weight.col,prs.weight,xty.snp,ite){
+
+    ensemble.weight <- c()
+    for (i in 1:ite){
+        ensemble.weight <- cbind(ensemble.weight, t(ensemble.results[[i]][[weight.col]]))
+    }
+    avg.ensemble.weight <- rowMeans(ensemble.weight)
+    ensemble.snp.weight <- prs.weight %*% avg.ensemble.weight
+    ensemble.snp.weight <- cbind(xty.snp$SNP, xty.snp$A1, ensemble.snp.weight)
+    colnames(ensemble.snp.weight) <- c("SNP", "A1", "Ensemble_Weight")
+    
+    return(ensemble.snp.weight)
+} 
+
+
+# create the start time for a function and print start time
+start_time <- function(name) {
+    begin.time = Sys.time()
+    cat("\n", name, " begins at ", format(begin.time, format = "%F %R %Z"), ":", sep = "", "\n\n")
+
+    return(begin.time)
+}
+
+
+# get the end time for a function and print how long the function took
+end_time <- function(name, begin) {
+    end.time <- Sys.time()
+    total.time <- difftime(time1=end.time,time2=begin,units="sec")
+    hrs <- floor(floor(total.time)/3600)
+    mins <- floor(floor(floor(total.time) - hrs * 3600)/60)
+    secs <- total.time - hrs*3600 - mins*60
+    cat("\n", name, " ended at ", format(end.time, format = "%F %R %Z"), ". \n  Total time: ", hrs, " hours, ", mins, " minutes and ", secs, " seconds.\n\n", sep = "")
 }
