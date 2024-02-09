@@ -164,6 +164,7 @@ Rscript ./code/PUMA-CUBS.evaluation.R \
 --xty_path <subsampled sumstats folder> \
 --stats_path <statistics folder> \
 --weight_path <SNP weights> \
+--full_weight_path <SNP weights from full sumstats> \
 --output_path <output folder>
 ```
   * `k`: number of folds in PUMA-CUBS's implementation of Monte Carlo cross-validation
