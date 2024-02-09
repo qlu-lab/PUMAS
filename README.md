@@ -160,6 +160,7 @@ Rscript ./code/PUMA-CUBS.evaluation.R \
 --ref_path <LD ref> \
 --trait_name <trait name> \
 --prs_method <prs_methods> \
+--ensemble <ensemble_method> \
 --xty_path <subsampled sumstats folder> \
 --stats_path <statistics folder> \
 --weight_path <SNP weights> \
@@ -169,9 +170,11 @@ Rscript ./code/PUMA-CUBS.evaluation.R \
   * `ref_path`: path to the LD genotype data
   * `trait_name`: file name for all subsampled summary statistics and SNP weight txt file
   * `prs_method`: PRS methods' names (e.g., put `lassosum,prscs,ldpred2` if the SNP weights files are named `Height.lassosum.txt`,`Height.prscs.txt`, and `Height.ldpred2.txt`)
-  * `xty_path`: folder containing partitioned summary statistics from subsampling step
-  * `stats_path`: folder containing statistics from subsampling step (e.g, variance of phenotype and sample size for each sumstats)
-  * `weight_path`: folder containing SNP weights files
+  * `ensemble`: the method of ensemble learning you want to do. Options are EN (ElasticNet), SL (Super Learning), or all (linear, EN, and SL ensemble methods)
+  * `xty_path`: folder containing partitioned summary statistics from the subsampling step
+  * `stats_path`: folder containing statistics from the subsampling step (e.g, variance of phenotype and sample size for each sumstats)
+  * `weight_path`: folder containing SNP weights files for prs methods
+  * `full_weight_path`: folder containing SNP weights files for prs methods with full summary statistics. This will be used to calculate the ensemble weights
   * `output_path`: folder to write PRS model-tuning and benchmarking results by PUMA-CUBS
   
 ## Output
@@ -179,7 +182,7 @@ Rscript ./code/PUMA-CUBS.evaluation.R \
 #### Subsampling
 * `<trait_name>.gwas.ite<i>.txt`: subsampled training GWAS summary statistics in the same format of input full GWAS summary statistics
 * `<trait_name>.xty.ite<i>.txt`: subsampled tuning sammary statistics
-* `<trait_name>.forEVAL.txt`: information including variance of phenotype and each subet of suammry statistics' sample size
+* `<trait_name>.forEVAL.txt`: information including variance of phenotype and each subset of summary statistics' sample size
 
 #### PRS Fine-tuning
 * `<trait_name>.<prs_method>.txt`: predictive R2 for each tuning parameter within a PRS method for each fold of Monte Carlo cross-validation. Each row is a fold in MCCV and each column is a tuning parameter.
@@ -187,14 +190,13 @@ Rscript ./code/PUMA-CUBS.evaluation.R \
 ### PUMA-CUBS
 #### Subsampling
 * `<trait_name>.gwas.omnibus.ite<i>.txt`: subsampled training GWAS summary statistics in the same format of input full GWAS summary statistics
-* `<trait_name>.xty.omnibus.ite<i>.txt`: subsampled tuning, ensemble training, and testing sammary statistics
-* `<trait_name>.omnibus.forEVAL.txt`: information including variance of phenotype and each subet of suammry statistics' sample size
+* `<trait_name>.xty.omnibus.ite<i>.txt`: subsampled tuning, ensemble training, and testing summary statistics
+* `<trait_name>.omnibus.forEVAL.txt`: information including variance of phenotype and each subset of summary statistics' sample size
 
 #### Ensemble PRS construction and PRS benchmarking
-* `<trait_name>.<prs_method>.tuning.txt`: evlauted on the tuning dataset. This file includes predictive R2 for each tuning parameter within a PRS method for each fold of Monte Carlo cross-validation. Each row is a fold in MCCV and each column is a tuning parameter.
-* `<trait_name>.<prs_method>.testing.txt`: evlauted on the testing dataset. This file includes predictive R2 for each tuning parameter within a PRS method for each fold of Monte Carlo cross-validation. Each row is a fold in MCCV and each column is a tuning parameter.
-* `<trait_name>.omnibus.weights.txt`: calculated on the ensemble training dataset. This file includes the weight of each PRS method in the ensemble score. Each row is a fold in MCCV. The average weights across `k` folds of MCCV are used to construct ensemble PRS.
-* `<trait_name>.omnibus.r2.txt`: evlauted on the testing dataset. This file includes predictive R2 for ensemble PRS for each fold of Monte Carlo cross-validation. Each row is a fold in MCCV.
+* `<trait_name>.prs.testing.r2.txt`: evaluated on the testing dataset. This file includes predictive R2 for each tuning parameter within a PRS method for each fold of Monte Carlo cross-validation. Each row is a fold in MCCV and each column is a tuning parameter.
+* `<trait_name>.<ensemble_method>.weights.txt`: calculated on the ensemble training dataset. This file includes SNP rsID, A1, and SNP weights for the ensemble PRS model.
+* `<trait_name>.<ensemble_method>.r2.txt`: evaluated on the testing dataset. This file includes predictive R2 for ensemble PRS for each fold of Monte Carlo cross-validation. Each row is a fold in MCCV.
 
 ## Citation
 * If you use PUMAS/PUMA-CUBS, please cite:
