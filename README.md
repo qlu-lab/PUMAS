@@ -2,12 +2,13 @@
 **PUMAS** and **PUMA-CUBS** are summary-statistcis-based method to fine-tune, combine, and benchmark PRS methods using only GWAS summary statistics and a LD reference panel. If the PRS fine-tuning is the only task, please use **PUMAS** functions. Otherwise to achieve all three objectives, please use **PUMA-CUBS**. A workflow of PUMAS/PUMA-CUBS is shown below ![here](https://github.com/qlu-lab/PUMAS/blob/master/Workflow.png)
 
 ## Announcements
-* We are currently preparing additional LD reference datasets.
 * Previous version of PUMAS for fine-tuning P+T/C+T PRSs is available [here](https://github.com/qlu-lab/PUMAS/tree/original).
+* Previous version of PUMA-CUBS using linear ensemble learning is available [here](https://github.com/qlu-lab/PUMAS/tree/master).
 
 ## Version History
 * 11/04/2022: Upload a tutorial for PUMAS and PUMA-CUBS.
 * 01/30/2023: Upload a script and tutorial for cleaning GWAS sumamry statistics.
+* 2/9/2024: Update for PUMA-CUBS with EN and SL ensemble learning.
 
 ## Getting Started
 * Clone this repository by `git clone https://github.com/qlu-lab/PUMAS.git`
