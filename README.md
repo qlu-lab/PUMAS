@@ -142,16 +142,22 @@ Rscript ./code/PUMA-CUBS.subsampling.R \
 --k <number of folds> \
 --partitions <training>,<tuning>,<ensemble training>,<testing> \
 --trait_name <trait name> \
+--ensemble <ensemble_method> \
 --gwas_path <GWAS sumstats folder> \
 --ld_path <ld folder> \
---output_path <output folder>
+--output_path <output folder> \
+--parallel \
+--threads <number of parallel threads>
 ```
   * `k`: number of folds in PUMA-CUBS's implementation of Monte Carlo cross-validation (e.g., `--k 4`)
   * `partitions`: subsets' sample size proportion compared to total samples (e.g., `--partitions 0.6,0.2,0.1,0.1`)
   * `trait_name`: file name of GWAS summary statistics
+  * `ensemble`: the method of ensemble learning you want to do. Options are `EN` (ElasticNet), `SL` (Super Learning), or `all` (linear, EN, and SL ensemble methods). If you want to use Superlearning, you must pass `SL` in the subsampling step as well to get an additional partition of the data.
   * `gwas_path`: folder containing GWAS summary statistics
   * `ld_path`: folder containing approximately independent LD blocks
   * `output_path`: folder to write partitioned GWAS summary statistics
+  * `parallel`: boolean flag for whether to run the Rscript in parallel or not. Default is FALSE. If you run PUMA-CUBS in parallel it will take significantly less time.
+  * `threads`: the number of threads to run the Rscript in parallel with. Default is k if `parallel` is TRUE, 1 if `parallel` is FALSE.
   
 ### Construct ensemble PRS and benchmark PRS models
 The required input datasets are mostly the same as PUMAS's PRS evaluation function. Different from PUMAS, PUMA-CUBS requires SNP weights from each PRS method to be stored in a separate `.<pre_method>.txt` file so that PUMA-CUBS can construct ensemble PRS based on fine-tuned PRS model from each method and benchmark all PRS models (**again, please make sure that SNP weights files have exactly the same set of SNPs, A1, and A2 in the same order as subsampled summary statistics**). After PRS model training, run:
@@ -166,18 +172,24 @@ Rscript ./code/PUMA-CUBS.evaluation.R \
 --stats_path <statistics folder> \
 --weight_path <SNP weights> \
 --full_weight_path <SNP weights from full sumstats> \
---output_path <output folder>
+--output_path <output folder> \
+--parallel \
+--threads <number of parallel threads> \
+--thr <threshold for stopping ensemble learning>
 ```
   * `k`: number of folds in PUMA-CUBS's implementation of Monte Carlo cross-validation
   * `ref_path`: path to the LD genotype data
   * `trait_name`: file name for all subsampled summary statistics and SNP weight txt file
   * `prs_method`: PRS methods' names (e.g., put `lassosum,prscs,ldpred2` if the SNP weights files are named `Height.lassosum.txt`,`Height.prscs.txt`, and `Height.ldpred2.txt`)
-  * `ensemble`: the method of ensemble learning you want to do. Options are EN (ElasticNet), SL (Super Learning), or all (linear, EN, and SL ensemble methods)
+  * `ensemble`: the method of ensemble learning you want to do. Options are `EN` (ElasticNet), `SL` (Super Learning), or `all` (linear, EN, and SL ensemble methods)
   * `xty_path`: folder containing partitioned summary statistics from the subsampling step
   * `stats_path`: folder containing statistics from the subsampling step (e.g, variance of phenotype and sample size for each sumstats)
   * `weight_path`: folder containing SNP weights files for prs methods
   * `full_weight_path`: folder containing SNP weights files for prs methods with full summary statistics. This will be used to calculate the ensemble weights
   * `output_path`: folder to write PRS model-tuning and benchmarking results by PUMA-CUBS
+  * `parallel`: boolean flag for whether to run the Rscript in parallel or not. Default is FALSE. If you run PUMA-CUBS in parallel it will take significantly less time.
+  * `threads`: the number of threads to run the Rscript in parallel with. Default is k if `parallel` is TRUE, 1 if `parallel` is FALSE.
+  * `thr` (optional): threshold for stopping ensemble learning. Default is 1e-5. Don't change this value unless you have a reason to.
   
 ## Output
 ### PUMAS
