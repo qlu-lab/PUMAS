@@ -157,7 +157,7 @@ Rscript ./code/PUMA-CUBS.subsampling.R \
   * `ld_path`: folder containing approximately independent LD blocks
   * `output_path`: folder to write partitioned GWAS summary statistics
   * `parallel`: boolean flag for whether to run the Rscript in parallel or not. Default is FALSE. If you run PUMA-CUBS in parallel it will take significantly less time.
-  * `threads`: the number of threads to run the Rscript in parallel with. Default is k if `parallel` is TRUE, 1 if `parallel` is FALSE.
+  * `threads`: the number of threads to run the Rscript in parallel with.
   
 ### Construct ensemble PRS and benchmark PRS models
 The required input datasets are mostly the same as PUMAS's PRS evaluation function. Different from PUMAS, PUMA-CUBS requires SNP weights from each PRS method to be stored in a separate `.<pre_method>.txt` file so that PUMA-CUBS can construct ensemble PRS based on fine-tuned PRS model from each method and benchmark all PRS models (**again, please make sure that SNP weights files have exactly the same set of SNPs, A1, and A2 in the same order as subsampled summary statistics**). After PRS model training, run:
