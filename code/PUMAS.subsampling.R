@@ -1,18 +1,7 @@
 #!/s/bin/R35
 
 # PUMAS R2
-if(!require(data.table)){
-    install.packages("data.table")
-    library(data.table)
-}
-if(!require(parallel)){
-    install.packages("parallel")
-    library(parallel)
-}
-if(!require(optparse)){
-    install.packages("optparse")
-    library(optparse)
-}
+source("./subsampling/helpers.R")
 
 # Read the argument into R
 options(stringsAsFactors=F)
@@ -37,136 +26,16 @@ ld_path <- opt$ld_path
 output_path <- opt$output_path
 chr <- opt$chr
 parallel <- opt$parallel
-threads <- opt$threads
 
-if (!parallel) {threads = 1}
-
-### functions below
-
-# subsample sumstats based on a subset of individuals from the entire GWAS data
-# sample splitting is 60, 20, 10, 10 (Ntr, Nt, Nvtr, Nvt)
-PUMAS.II.FUN.I <- function(FunII.GWAS, FunII.Nt, FunII.LD, FunII.LD.block, trait_name, k, chr){
-  
-  # parameter initialization
-  FunII.N.samplesize <- FunII.GWAS$N
-  FunII.Ntr <- FunII.N.samplesize - FunII.Nt
-  FunII.MAF <- FunII.GWAS$MAF
-  FunII.X.VAR <- 2*FunII.MAF*(1-FunII.MAF)
-  FunII.SE <- FunII.GWAS$SE
-  FunII.beta <- FunII.GWAS$BETA
-  
-  # statistics initialization
-  FunII.Var.Y <- quantile(FunII.SE^2*FunII.N.samplesize*FunII.X.VAR,probs=seq(0,1,0.1))[10]
-  FunII.XtY <- FunII.beta*FunII.N.samplesize*FunII.X.VAR
-  XtY_mu <- (FunII.Nt/FunII.N.samplesize)*FunII.XtY
-
-  # sampling covariance matrix for XtY_t
-  project_mat <- mclapply(1:length(FunII.LD.block), function(j){
-      if (FunII.LD.block[[j]][1]==FunII.LD.block[[j]][2]) {
-          FunII.SE.tmp <- FunII.SE[FunII.LD.block[[j]][1]:FunII.LD.block[[j]][2]]
-          FunII.X.VAR.tmp <- FunII.X.VAR[FunII.LD.block[[j]][1]:FunII.LD.block[[j]][2]]
-          FunII.N.samplesize.tmp <- FunII.N.samplesize[FunII.LD.block[[j]][1]:FunII.LD.block[[j]][2]]
-          FunII.NminusNv.tmp <- FunII.N.samplesize.tmp - FunII.Nt
-          
-          epsilon_mat <- FunII.SE.tmp*sqrt(FunII.X.VAR.tmp)*sqrt(FunII.N.samplesize.tmp)
-          XtY_sigma <- (median(FunII.NminusNv.tmp)*(median(FunII.N.samplesize.tmp) - median(FunII.NminusNv.tmp))/median(FunII.N.samplesize.tmp))*(epsilon_mat^2)*as.numeric(FunII.LD[[j]])*FunII.X.VAR.tmp
-          return(sqrt(XtY_sigma))
-      }
-      FunII.SE.tmp <- FunII.SE[FunII.LD.block[[j]][1]:FunII.LD.block[[j]][2]]
-      FunII.X.VAR.tmp <- FunII.X.VAR[FunII.LD.block[[j]][1]:FunII.LD.block[[j]][2]]
-      FunII.X.VAR.mat.tmp <- sqrt(FunII.X.VAR.tmp %*% t(FunII.X.VAR.tmp))
-      FunII.N.samplesize.tmp <- FunII.N.samplesize[FunII.LD.block[[j]][1]:FunII.LD.block[[j]][2]]
-      FunII.NminusNv.tmp <- FunII.N.samplesize.tmp - FunII.Nt
-        
-      SE_mat_1 <- matrix(rep(FunII.SE.tmp*sqrt(FunII.X.VAR.tmp)*sqrt(FunII.N.samplesize.tmp),length(FunII.SE.tmp)),length(FunII.SE.tmp),length(FunII.SE.tmp))
-      SE_mat_2 <- matrix(rep(FunII.SE.tmp*sqrt(FunII.X.VAR.tmp)*sqrt(FunII.N.samplesize.tmp),each=length(FunII.SE.tmp)),length(FunII.SE.tmp),length(FunII.SE.tmp))
-      epsilon_mat <- SE_mat_1
-      epsilon_mat[SE_mat_1>=SE_mat_2] <- SE_mat_2[SE_mat_1>=SE_mat_2]
-      XtY_sigma <- (median(FunII.NminusNv.tmp)*(median(FunII.N.samplesize.tmp) - median(FunII.NminusNv.tmp))/median(FunII.N.samplesize.tmp))*(epsilon_mat^2)*FunII.LD[[j]]*FunII.X.VAR.mat.tmp
-      eigen_decom <- eigen(XtY_sigma)
-      eigen_decom_value <- pmax(eigen_decom$value,0)
-      project_block <- eigen_decom$vector %*% diag(sqrt(eigen_decom_value))
-      return(project_block)
-    }, mc.cores=threads)
-
-    # sample summary statistics
-    FunII.Cor.squared <- c()
-    for (i in 1:k){
-      if (!is.null(chr)) {
-        set.seed(as.numeric(substring(chr,2)))
-      } else {
-        set.seed(i)
-      }
-      FunII.XtY.test.temp <- c()
-      for (j in 1:length(FunII.LD.block)) {
-        XtY_mu_tmp <- XtY_mu[FunII.LD.block[[j]][1]:FunII.LD.block[[j]][2]]
-        if (FunII.LD.block[[j]][1] == FunII.LD.block[[j]][2]) {
-          FunII.XtY.test.temp <- c(FunII.XtY.test.temp,unlist(XtY_mu_tmp + project_mat[[j]] * rnorm(n=1,0,1)))
-        } else {
-          FunII.XtY.test.temp <- c(FunII.XtY.test.temp,unlist(XtY_mu_tmp + project_mat[[j]] %*% rnorm(ncol(FunII.LD[[j]]),0,1)))
-        }
-      }
-
-    ## calculate training summary statistics
-    FunII.XtY.train.temp <- FunII.XtY - FunII.XtY.test.temp
-    FunII.beta.train.temp <- FunII.XtY.train.temp/(FunII.Ntr*FunII.X.VAR)
-    FunII.SE.train.temp <- sqrt(FunII.N.samplesize/FunII.Ntr)*FunII.GWAS$SE
-    FunII.Zscore.temp <- FunII.XtY.train.temp/(sqrt(FunII.N.samplesize*FunII.Ntr)*FunII.X.VAR*FunII.GWAS$SE)
-    FunII.pvalue.temp <- 2*pnorm(abs(FunII.Zscore.temp),lower.tail=F)
-        
-    ## write new beta, SE, and p-value in the GWAS sumstats
-    FunII.GWAS.tmp <- FunII.GWAS
-    FunII.GWAS.tmp$`BETA` <- FunII.beta.train.temp
-    FunII.GWAS.tmp$`SE` <- FunII.SE.train.temp
-    FunII.GWAS.tmp$`P` <- FunII.pvalue.temp
-    FunII.GWAS.tmp$`N` <- FunII.Ntr
-
-    fwrite(FunII.GWAS.tmp,paste0(output_path,trait_name,".gwas.ite",i,chr,".txt"),col.names=T,row.names=F,sep="\t",quote=F)  
-    cat("\nOUTPUTTING .gwas.ite to : ", paste0(output_path,trait_name,".gwas.ite",i,chr,".txt"))
-    
-    ## write XtY
-    fwrite(data.frame(CHR=FunII.GWAS$CHR,SNP=FunII.GWAS$SNP,A1=FunII.GWAS$A1,A2=FunII.GWAS$A2,test=FunII.XtY.test.temp),paste0(output_path,trait_name,".xty.ite",i,chr,".txt"),col.names=T,row.names=F,sep="\t",quote=F)  
+if (!parallel) {
+  threads <- 1
+} else {
+  if (!opt$threads) {
+    threads <- k
+  } else {
+    threads <- opt$threads
   }
-  
-  return(FunII.Var.Y)
 }
-
-
-## match order of sumstats, LD genotype, and LD matrices
-match_gwas_LD <- function(gwas,LD,rs,bp=NULL){
-
-  match <- Filter(length, mclapply(1:length(LD), function(i){
-    snp.overlap <- intersect(gwas$SNP,rs[[i]])
-    if (length(snp.overlap)==0) {
-      return()
-    } else {
-      ld_blk <- LD[[i]][match(snp.overlap,rs[[i]]),match(snp.overlap,rs[[i]])]
-      rs_blk <- rs[[i]][match(snp.overlap,rs[[i]])]
-      gwas <- gwas[match(snp.overlap,gwas$SNP),]
-      ld_blk_size <- length(snp.overlap)
-      return(list(ld_blk=ld_blk, rs_blk=rs_blk, gwas=gwas, ld_blk_size=ld_blk_size))
-    }
-  }, mc.cores=threads))
-
-  new_ld_blocks <- list()
-  new_rs_blocks <- list()
-  ld_block_size <- list()
-  gwas_matched <- c()
-  start.num <- 1
-  end.num <- 0
-  for (i in 1:length(match)) {
-    new_ld_blocks[[i]] <- match[[i]]$ld_blk
-    new_rs_blocks[[i]] <- match[[i]]$rs_blk
-    gwas_matched <- rbind(gwas_matched, match[[i]]$gwas)
-    end.num <- end.num + match[[i]]$ld_blk_size
-    ld_block_size[[i]] <- c(start.num, end.num)
-    start.num <- end.num + 1
-  }
-  
-  return(list(gwas_matched=gwas_matched,new_rs_blocks=new_rs_blocks,new_ld_blocks=new_ld_blocks,ld_block_size=ld_block_size))
-}
-
-
 
 # main function
 main <- function(){
@@ -195,7 +64,6 @@ main <- function(){
     pumas_tmp <- PUMAS.II.FUN.I(FunII.GWAS=matched_data$gwas_matched, FunII.Nt=floor(partitions[2]*min(matched_data$gwas_matched$N)),FunII.LD=matched_data$new_ld_blocks, FunII.LD.block=matched_data$ld_block_size, trait_name=trait_name, k=k, chr=chr)
 
     fwrite(data.frame(var.Y=pumas_tmp,N.t=floor(partitions[2]*min(matched_data$gwas_matched$N))),paste0(output_path,trait_name,".forEVAL",chr,".txt"),col.names=T,row.names=F,sep="\t",quote=F)
-    print("DONE RUNNING SUBSAMPLING")
 }
 
 ## execute main function

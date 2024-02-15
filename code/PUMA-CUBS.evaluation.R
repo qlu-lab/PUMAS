@@ -21,12 +21,11 @@ if(!require(Rcpp)){
     suppressMessages(library(Rcpp))
 }
 
-## TODO: update file path to be relative file path
 ### import ensemble learning files
-source("./PUMAS/code/evaluation/EN_sumstats.R")
-source("./PUMAS/code/evaluation/SL_sumstats.R")
-source("./PUMAS/code/evaluation/helpers.R")
-sourceCpp("./PUMAS/code/evaluation/CoordDescent.cpp")
+source("./evaluation/EN_sumstats.R")
+source("./evaluation/SL_sumstats.R")
+source("./evaluation/helpers.R")
+sourceCpp("./evaluation/CoordDescent.cpp")
 
 ### Read input arguments into R
 options(stringsAsFactors=F)
@@ -41,7 +40,9 @@ option_list = list(
   make_option("--weight_path", action = "store", default = NA, type = "character"),
   make_option("--full_weight_path", action = "store", default = NA, type = "character"),
   make_option("--output_path", action = "store", default = NA, type = "character"),
-  make_option("--thr", action = "store", default = 1e-5, type = "numeric")
+  make_option("--thr", action = "store", default = 1e-5, type = "numeric"),
+  make_option("--parallel", action = "store_true", default = FALSE),
+  make_option("--threads", action = "store", default = NULL, type = "numeric")
 )
 ### assign variables for user provided arguments
 opt = parse_args(OptionParser(option_list=option_list))
@@ -56,13 +57,20 @@ weight_path <- opt$weight_path
 full_weight_path <- opt$full_weight_path
 output_path <- opt$output_path
 threshold <- opt$thr
+parallel <- opt$parallel
+if (!parallel) {
+    cores <- 1
+} else {
+    if (is.null(opt$threads)) {
+        cores <- min(k, detectCores() - 1)
+    } else {
+        cores <- opt$threads
+    }
+}
 
 ### start time for PUMA-CUBS evaluation
 cat("\n\nRunning PUMA-CUBS evaluation ...\n")
 begin.time.total = start_time("PUMA-CUBS evaluation")
-# assign number of cores to be min of number available or the number of cross-validation steps
-#cores <- min(detectCores(), k)
-cores <- k
 
 ### Read reference genotype
 cat("\n\nReading reference genotypes ...\n")
@@ -77,15 +85,7 @@ end_time("Reading reference genotypes", begin.time)
 cat("\n\nSorting PRS weights ...\n")
 begin.time <- start_time("Sorting PRS weights")
 snp.weights.mat <- sort_sumstats(prs_methods=prs_method,xty.snp=xty.tmp,iterations=k)
-#fwrite(snp.weights.mat, "./snp_weights.txt")
 end_time("Sorting PRS weights", begin.time)
-
-### Do PCA to select top 20 PRS methods
-#prs_eigen_vector <- eigen(cov(scale(snp.weights.mat[[1]])))$vector
-#feature_importance <- apply(prs_eigen_vector^2, 1, sum)
-#top_20_indices <- order(feature_importance, decreasing = TRUE)[1:20]
-#print(top_20_indices)
-#snp.weights.mat <- snp.weights.mat[, top_20_indices]
 
 ### Calculate single PRS r2 and exclude some PRS methods
 cat("\n\nCalculate single PRS and remove PRS methods ...\n")
