@@ -252,7 +252,7 @@ frq <- fread(frq_path, header=T) # change to user input folder path
 
 gwas.raw <- as.data.frame(fread(file_path, header=T)) # need user to input $file_path
 
-gwas.QCed <- gwas_qc(gwas=gwas.raw,chr=chr.raw,bp=bp.raw,snp=snp.raw,a1=a1.raw,a2=a2.raw,stat=stat.raw,p=p.raw,binary=binary.raw,se=se.raw,maf=maf.raw,n.total=n.total.raw,n_case=n.case.raw,n_con=n.con.raw,n_col=n.col.raw,n_case_col=n.case.col.raw,n_con_col=n.con.col.raw,freq=frq,OR=OR.raw)
+gwas.QCed <- gwas_qc(gwas=gwas.raw,chr=chr.raw,bp=bp.raw,snp=snp.raw,a1=a1.raw,a2=a2.raw,maf=maf.raw,stat=stat.raw,p=p.raw,binary=binary.raw,se=se.raw,n.total=n.total.raw,n_case=n.case.raw,n_con=n.con.raw,n_col=n.col.raw,n_case_col=n.case.col.raw,n_con_col=n.con.col.raw,freq=frq,OR=OR.raw)
 
 # retrieve trait_name from $file_path
 trait_name <- unlist(strsplit(tail(unlist(strsplit(file_path, "/")), 1), "[.]"))[1]
