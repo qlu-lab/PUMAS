@@ -242,6 +242,12 @@ gwas_qc <- function(gwas,chr,bp,snp,a1,a2,stat,p,binary,se,maf,n.total,n_case,n_
     if (nrow(gwas.tmp) < 2e5){
         warning("Number of SNPs remained is smaller than 200,000 after QC, suggesting poor GWAS quality.")
     }
+
+    # Order columns of QCed sumstats
+    ordered_columns <- c("CHR", "BP", "SNP", "A1", "A2", "MAF", "BETA", "SE", "P", "N")
+    remaining_columns <- setdiff(names(gwas.tmp), ordered_columns)
+    ordered <- c(ordered_columns, remaining_columns)
+    gwas.tmp <- gwas.tmp[, ordered]
     
     return(gwas.tmp)
 }
