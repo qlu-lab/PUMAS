@@ -248,6 +248,8 @@ gwas_qc <- function(gwas,chr,bp,snp,a1,a2,stat,p,binary,se,maf,n.total,n_case,n_
     remaining_columns <- setdiff(names(gwas.tmp), ordered_columns)
     ordered <- c(ordered_columns, remaining_columns)
     gwas.tmp <- gwas.tmp[, ordered]
+    # remove any NAs
+    gwas.tmp <- na.omit(gwas.tmp)
     
     return(gwas.tmp)
 }
