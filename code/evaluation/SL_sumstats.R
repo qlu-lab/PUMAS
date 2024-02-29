@@ -72,7 +72,11 @@ EN_sl_main <- function(X.ref, param, weight, exclude, thr){
         prsty.sl <- sl.input.weights %*% t(snp.weight) %*% xty.dat$validation_train / (sqrt(stat.dat$var.Y) * stat.dat$N.vtr * sd.yhat)
         
         sl.weights <- ss_lm(prsty=prsty.sl, prs.cov=cov.yhat)
+        sl.weights.ridge <- EN_ss_weight(prsty=prsty.sl, prs.cov=cov.yhat, param=best.ridge, thr=thr)
+        sl.weights.lasso <- EN_ss_weight(prsty=prsty.sl, prs.cov=cov.yhat, param=best.lasso, thr=thr)
         final.weights <- t(sl.weights) %*% sl.input.weights
+        final.weights.ridge <- t(sl.weights.ridge) %*% sl.input.weights
+        final.weights.lasso <- t(sl.weights.lasso) %*% sl.input.weights
 
         # ensemble R2 calculation
         Y.hat <- X.ref[ref.final,] %*% snp.weight
@@ -83,12 +87,25 @@ EN_sl_main <- function(X.ref, param, weight, exclude, thr){
         
         sl.model.r2 <- EN_ss_r2(prsty=prsty.test, prs.cov=cov.yhat, prs.weight=as.numeric(final.weights))
         
-        return(list(weights=final.weights,r2=sl.model.r2))
+        return(list(weights=final.weights,ridge.weights=final.weights.ridge,lasso.weights=final.weights.lasso,r2=sl.model.r2))
     }, mc.cores=cores)
 
     if (!is.null(full.snp.weight)) {
+        # lm weights
         sl.weights <- ensemble_snp_weights(ensemble.results=sl_results,weight.col="weights",prs.weight=full.snp.weight,xty.snp=xty.tmp,ite=k)
-        write.table(sl.weights,paste0(output_path,trait_name,".sl.weights.txt"),col.names = T, row.names = F,sep = "\t",quote = F)
+        fwrite(as.data.table(sl.weights),paste0(output_path,trait_name,".sl.weights.txt"),col.names = T, row.names = F,sep = "\t",quote = F)
+        sl.weights.fold <- ensemble_snp_weights(ensemble.results=sl_results,weight.col="weights",prs.weight=full.snp.weight,xty.snp=xty.tmp,ite=1)
+        fwrite(as.data.table(sl.weights.fold),paste0(output_path,trait_name,".fold1.sl.weights.txt"),col.names = T, row.names = F,sep = "\t",quote = F)
+        # ridge weights
+        ridge.sl.weights <- ensemble_snp_weights(ensemble.results=sl_results,weight.col="ridge.weights",prs.weight=full.snp.weight,xty.snp=xty.tmp,ite=k)
+        fwrite(as.data.table(ridge.sl.weights),paste0(output_path,trait_name,".sl.ridge.weights.txt"),col.names = T, row.names = F,sep = "\t",quote = F)
+        ridge.sl.weights.fold <- ensemble_snp_weights(ensemble.results=sl_results,weight.col="ridge.weights",prs.weight=full.snp.weight,xty.snp=xty.tmp,ite=1)
+        fwrite(as.data.table(ridge.sl.weights.fold),paste0(output_path,trait_name,".fold1.sl.ridge.weights.txt"),col.names = T, row.names = F,sep = "\t",quote = F)
+        # lasso weights
+        sl.weights <- ensemble_snp_weights(ensemble.results=sl_results,weight.col="lasso.weights",prs.weight=full.snp.weight,xty.snp=xty.tmp,ite=k)
+        fwrite(as.data.table(sl.weights),paste0(output_path,trait_name,".sl.lasso.weights.txt"),col.names = T, row.names = F,sep = "\t",quote = F)
+        sl.weights.fold <- ensemble_snp_weights(ensemble.results=sl_results,weight.col="lasso.weights",prs.weight=full.snp.weight,xty.snp=xty.tmp,ite=1)
+        fwrite(as.data.table(sl.weights.fold),paste0(output_path,trait_name,".fold1.sl.lasso.weights.txt"),col.names = T, row.names = F,sep = "\t",quote = F)
     }
     sl.r2 <- c()
     for (i in 1:k) {
