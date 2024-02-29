@@ -51,6 +51,10 @@ EN_sl_main <- function(X.ref, param, weight, exclude, thr){
         }
         best.ridge <- matrix(param[1:21,][which.max(model.r2[1:21]),],1,2)
         best.lasso <- matrix(param[85:105,][which.max(model.r2[85:105]),],1,2)
+            
+        ## added (start) ##
+        best.en <- matrix(param[22:84,][which.max(model.r2[22:84]),],1,2)
+        ## added (end) ##
         
         # ensemble weights calculation (final)
         Y.hat <- X.ref[c(ref.train,ref.tune),] %*% snp.weight
@@ -62,6 +66,10 @@ EN_sl_main <- function(X.ref, param, weight, exclude, thr){
         weights.ridge <- EN_ss_weight(prsty=prsty.EN, prs.cov=cov.yhat, param=best.ridge, thr=thr)
         weights.lasso <- EN_ss_weight(prsty=prsty.EN, prs.cov=cov.yhat, param=best.lasso, thr=thr)
         weights.lm <- ss_lm(prsty=prsty.EN, prs.cov=cov.yhat)
+
+        ## added (start) ##
+        weights.en <- EN_ss_weight(prsty=prsty.EN, prs.cov=cov.yhat, param=best.en, thr=thr)
+        ## added (end) ##
         
         # calculate sl weights
         sl.input.weights <- rbind(weights.ridge,weights.lasso,weights.lm)
@@ -72,11 +80,23 @@ EN_sl_main <- function(X.ref, param, weight, exclude, thr){
         prsty.sl <- sl.input.weights %*% t(snp.weight) %*% xty.dat$validation_train / (sqrt(stat.dat$var.Y) * stat.dat$N.vtr * sd.yhat)
         
         sl.weights <- ss_lm(prsty=prsty.sl, prs.cov=cov.yhat)
-        sl.weights.ridge <- EN_ss_weight(prsty=prsty.sl, prs.cov=cov.yhat, param=best.ridge, thr=thr)
-        sl.weights.lasso <- EN_ss_weight(prsty=prsty.sl, prs.cov=cov.yhat, param=best.lasso, thr=thr)
+        # sl.weights.ridge <- EN_ss_weight(prsty=prsty.sl, prs.cov=cov.yhat, param=best.ridge, thr=thr)
+        # sl.weights.lasso <- EN_ss_weight(prsty=prsty.sl, prs.cov=cov.yhat, param=best.lasso, thr=thr)
+
         final.weights <- t(sl.weights) %*% sl.input.weights
-        final.weights.ridge <- t(sl.weights.ridge) %*% sl.input.weights
-        final.weights.lasso <- t(sl.weights.lasso) %*% sl.input.weights
+        # final.weights.ridge <- t(sl.weights.ridge) %*% sl.input.weights
+        # final.weights.lasso <- t(sl.weights.lasso) %*% sl.input.weights
+
+        ## added (start) ##
+        sl.input.weights.en <- rbind(weights.ridge,weights.lasso,weights.en)
+        Y.hat.en <- X.ref[ref.final,] %*% snp.weight %*% t(sl.input.weights.en)
+        sd.yhat.en <- as.numeric(apply(Y.hat.en,2,sd))
+        Y.hat.std.en <- scale(Y.hat.en)
+        cov.yhat.en <- cov(Y.hat.std.en)
+        prsty.sl.en <- sl.input.weights.en %*% t(snp.weight) %*% xty.dat$validation_train / (sqrt(stat.dat$var.Y) * stat.dat$N.vtr * sd.yhat.en)
+        sl.weights.en <- ss_lm(prsty=prsty.sl.en, prs.cov=cov.yhat.en)
+        final.weights.en <- t(sl.weights.en) %*% sl.input.weights.en
+        ## added (end) ##
 
         # ensemble R2 calculation
         Y.hat <- X.ref[ref.final,] %*% snp.weight
@@ -87,8 +107,13 @@ EN_sl_main <- function(X.ref, param, weight, exclude, thr){
         
         sl.model.r2 <- EN_ss_r2(prsty=prsty.test, prs.cov=cov.yhat, prs.weight=as.numeric(final.weights))
         
-        return(list(weights=final.weights,ridge.weights=final.weights.ridge,lasso.weights=final.weights.lasso,r2=sl.model.r2))
+    #     return(list(weights=final.weights,ridge.weights=final.weights.ridge,lasso.weights=final.weights.lasso,r2=sl.model.r2))
+    # }, mc.cores=cores)
+
+        ## added (start) ##
+        return(list(weights=final.weights,weights.en=final.weights.en))
     }, mc.cores=cores)
+        ## added (end) ##
 
     if (!is.null(full.snp.weight)) {
         # lm weights
