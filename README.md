@@ -1,12 +1,12 @@
-# PUMAS/PUMA-CUBS
-**PUMAS** and **PUMA-CUBS** are summary-statistcis-based method to fine-tune, combine, and benchmark PRS methods using only GWAS summary statistics and a LD reference panel. If the PRS fine-tuning is the only task, please use **PUMAS** functions. Otherwise to achieve all three objectives, please use **PUMA-CUBS**. A workflow of PUMAS/PUMA-CUBS is shown below ![here](https://github.com/qlu-lab/PUMAS/blob/master/Workflow.png)
+# PUMAS/PUMAS-ensemble
+**PUMAS** and **PUMAS-ensemble** are summary-statistcis-based method to fine-tune, combine, and benchmark PRS methods using only GWAS summary statistics and a LD reference panel. If the PRS fine-tuning is the only task, please use **PUMAS** functions. Otherwise to achieve all three objectives, please use **PUMAS-ensemble**. A workflow of PUMAS/PUMAS-ensemble is shown below ![here](https://github.com/qlu-lab/PUMAS/blob/master/Workflow.png)
 
 ## Announcements
 * We are currently preparing additional LD reference datasets.
 * Previous version of PUMAS for fine-tuning P+T/C+T PRSs is available [here](https://github.com/qlu-lab/PUMAS/tree/original).
 
 ## Version History
-* 11/04/2022: Upload a tutorial for PUMAS and PUMA-CUBS.
+* 11/04/2022: Upload a tutorial for PUMAS and PUMAS-ensemble.
 * 01/30/2023: Upload a script and tutorial for cleaning GWAS sumamry statistics.
 
 ## Getting Started
@@ -61,7 +61,7 @@ If the sumstats don't contain any per-SNP sample size information, this script w
 
 ## Using PUMAS
 ### Subsample training and tuning summary statistics
-For PUMAS/PUMA-CUBS to subsample GWAS summary statistics from a full GWAS summary-level data, two datasets are requried:
+For PUMAS/PUMAS-ensemble to subsample GWAS summary statistics from a full GWAS summary-level data, two datasets are requried:
   * **Approximately independent LD blocks**
   * **GWAS summary statistics**. A tab delimited file in `.txt` or `.gz` format containing at least the following fields:
     * SNP: SNP identifier (rsID)
@@ -132,12 +132,12 @@ Rscript ./code/PUMAS.evaluation.R \
   * `weight_path`: folder containing SNP weights file
   * `output_path`: folder to write PRS evalation and model-tuning results by PUMAS
   
-## Using PUMA-CUBS
+## Using PUMAS-ensemble
 
 ### Subsample training, tuning, ensemble training, and testing summary statistics
-PUMA-CUBS uses exactly the same inputs as PUMAS. The only difference between implementation between PUMAS and PUMA-CUBS is scripting. To partition full GWAS summary statistics to four different subsets, run:
+PUMAS-ensemble uses exactly the same inputs as PUMAS. The only difference between implementation between PUMAS and PUMAS-ensemble is scripting. To partition full GWAS summary statistics to four different subsets, run:
 ```
-Rscript ./code/PUMA-CUBS.subsampling.R \
+Rscript ./code/PUMAS-ensemble.subsampling.R \
 --k <number of folds> \
 --partitions <training>,<tuning>,<ensemble training>,<testing> \
 --trait_name <trait name> \
@@ -145,7 +145,7 @@ Rscript ./code/PUMA-CUBS.subsampling.R \
 --ld_path <ld folder> \
 --output_path <output folder>
 ```
-  * `k`: number of folds in PUMA-CUBS's implementation of Monte Carlo cross-validation (e.g., `--k 4`)
+  * `k`: number of folds in PUMAS-ensemble's implementation of Monte Carlo cross-validation (e.g., `--k 4`)
   * `partitions`: subsets' sample size proportion compared to total samples (e.g., `--partitions 0.6,0.2,0.1,0.1`)
   * `trait_name`: file name of GWAS summary statistics
   * `gwas_path`: folder containing GWAS summary statistics
@@ -153,9 +153,9 @@ Rscript ./code/PUMA-CUBS.subsampling.R \
   * `output_path`: folder to write partitioned GWAS summary statistics
   
 ### Construct ensemble PRS and benchmark PRS models
-The required input datasets are mostly the same as PUMAS's PRS evaluation function. Different from PUMAS, PUMA-CUBS requires SNP weights from each PRS method to be stored in a separate `.<pre_method>.txt` file so that PUMA-CUBS can construct ensemble PRS based on fine-tuned PRS model from each method and benchmark all PRS models (**again, please make sure that SNP weights files have exactly the same set of SNPs, A1, and A2 in the same order as subsampled summary statistics**). After PRS model training, run:
+The required input datasets are mostly the same as PUMAS's PRS evaluation function. Different from PUMAS, PUMAS-ensemble requires SNP weights from each PRS method to be stored in a separate `.<pre_method>.txt` file so that PUMAS-ensemble can construct ensemble PRS based on fine-tuned PRS model from each method and benchmark all PRS models (**again, please make sure that SNP weights files have exactly the same set of SNPs, A1, and A2 in the same order as subsampled summary statistics**). After PRS model training, run:
 ```
-Rscript ./code/PUMA-CUBS.evaluation.R \
+Rscript ./code/PUMAS-ensemble.evaluation.R \
 --k <number of folds> \
 --ref_path <LD ref> \
 --trait_name <trait name> \
@@ -165,14 +165,14 @@ Rscript ./code/PUMA-CUBS.evaluation.R \
 --weight_path <SNP weights> \
 --output_path <output folder>
 ```
-  * `k`: number of folds in PUMA-CUBS's implementation of Monte Carlo cross-validation
+  * `k`: number of folds in PUMAS-ensemble's implementation of Monte Carlo cross-validation
   * `ref_path`: path to the LD genotype data
   * `trait_name`: file name for all subsampled summary statistics and SNP weight txt file
   * `prs_method`: PRS methods' names (e.g., put `lassosum,prscs,ldpred2` if the SNP weights files are named `Height.lassosum.txt`,`Height.prscs.txt`, and `Height.ldpred2.txt`)
   * `xty_path`: folder containing partitioned summary statistics from subsampling step
   * `stats_path`: folder containing statistics from subsampling step (e.g, variance of phenotype and sample size for each sumstats)
   * `weight_path`: folder containing SNP weights files
-  * `output_path`: folder to write PRS model-tuning and benchmarking results by PUMA-CUBS
+  * `output_path`: folder to write PRS model-tuning and benchmarking results by PUMAS-ensemble
   
 ## Output
 ### PUMAS
@@ -184,7 +184,7 @@ Rscript ./code/PUMA-CUBS.evaluation.R \
 #### PRS Fine-tuning
 * `<trait_name>.<prs_method>.txt`: predictive R2 for each tuning parameter within a PRS method for each fold of Monte Carlo cross-validation. Each row is a fold in MCCV and each column is a tuning parameter.
 
-### PUMA-CUBS
+### PUMAS-ensemble
 #### Subsampling
 * `<trait_name>.gwas.omnibus.ite<i>.txt`: subsampled training GWAS summary statistics in the same format of input full GWAS summary statistics
 * `<trait_name>.xty.omnibus.ite<i>.txt`: subsampled tuning, ensemble training, and testing sammary statistics
@@ -197,7 +197,7 @@ Rscript ./code/PUMA-CUBS.evaluation.R \
 * `<trait_name>.omnibus.r2.txt`: evlauted on the testing dataset. This file includes predictive R2 for ensemble PRS for each fold of Monte Carlo cross-validation. Each row is a fold in MCCV.
 
 ## Citation
-* If you use PUMAS/PUMA-CUBS, please cite:
+* If you use PUMAS/PUMAS-ensemble, please cite:
   
   Zhao, Z., Gruenloh, T., Wu, Y., Sun, Z., Miao, J., Wu, Y., Song, J., & Lu, Q. (2022). [Optimizing and benchmarking polygenic risk scores with GWAS summary statistics](https://www.biorxiv.org/content/10.1101/2022.10.26.513833v1). *bioRxiv*.
 * If you use PUMAS for fine-tuning P+T/C+T PRS, please cite:
@@ -205,4 +205,4 @@ Rscript ./code/PUMA-CUBS.evaluation.R \
   Zhao, Z., Yi, Y., Song, J., Wu, Y., Zhong, X., Hohman, T.J., Fletcher, J., & Lu, Q. (2021). [PUMAS: fine-tuning polygenic risk scores with GWAS summary statistics](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-021-02479-9). *Genome Biology*, 22,257.
   
 ## Support
-Please send questions and issues related to PUMAS/PUMA-CUBS software to Zijie Zhao (zzhao232@wisc.edu) and Qiongshi Lu (qlu@biostat.wisc.edu).
+Please send questions and issues related to PUMAS/PUMAS-ensemble software to Zijie Zhao (zzhao232@wisc.edu) and Qiongshi Lu (qlu@biostat.wisc.edu).
