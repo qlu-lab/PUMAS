@@ -200,8 +200,7 @@ Rscript ./code/PUMAS-ensemble.evaluation.R \
 * If you use PUMAS/PUMAS-ensemble, please cite:
   
   Zhao, Z., Gruenloh, T., Wu, Y., Sun, Z., Miao, J., Wu, Y., Song, J., & Lu, Q. (2024). [Optimizing and benchmarking polygenic risk scores with GWAS summary statistics](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-024-03400-w). *Genome Biology*, 25, 260.
-* If you use PUMAS for fine-tuning P+T/C+T PRS, please cite:
-  
+
   Zhao, Z., Yi, Y., Song, J., Wu, Y., Zhong, X., Hohman, T.J., Fletcher, J., & Lu, Q. (2021). [PUMAS: fine-tuning polygenic risk scores with GWAS summary statistics](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-021-02479-9). *Genome Biology*, 22, 257.
   
 ## Support
