@@ -1,5 +1,6 @@
 # PUMAS/PUMAS-ensemble
-**PUMAS** and **PUMAS-ensemble** are summary-statistcis-based method to fine-tune, combine, and benchmark PRS methods using only GWAS summary statistics and a LD reference panel. If the PRS fine-tuning is the only task, please use **PUMAS** functions. Otherwise to achieve all three objectives, please use **PUMAS-ensemble**. A workflow of PUMAS/PUMAS-ensemble is shown below ![here](https://github.com/qlu-lab/PUMAS/blob/master/Workflow.png)
+**PUMAS** and **PUMAS-ensemble** are summary-statistcis-based method to fine-tune, combine, and benchmark PRS methods using only GWAS summary statistics and a LD reference panel. If the PRS fine-tuning is the only task, please use **PUMAS** functions. Otherwise to achieve all three objectives, please use **PUMAS-ensemble**. A workflow of PUMAS/PUMAS-ensemble is shown below   
+![here](https://github.com/qlu-lab/PUMAS/blob/master/Workflow.png)   
 
 ## Announcements
 * We are currently preparing additional LD reference datasets.
