@@ -217,6 +217,8 @@ Rscript ./code/PUMAS.evaluation.R \
 
 ## Citation
 * If you use PUMAS/PUMAS-ensemble, please cite:
+
+  Zhao, Z., Dorn, S., Wu, Y., Yang, X., Jin, J., & Lu, Q. (2024). [One score to rule them all: regularized ensemble polygenic risk prediction with GWAS summary statistics](https://doi.org/10.1101/2024.11.27.625748). *bioRxiv*, 2024.11.27.625748.
   
   Zhao, Z., Gruenloh, T., Wu, Y., Sun, Z., Miao, J., Wu, Y., Song, J., & Lu, Q. (2024). [Optimizing and benchmarking polygenic risk scores with GWAS summary statistics](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-024-03400-w). *Genome Biology*, 25, 260.
 
