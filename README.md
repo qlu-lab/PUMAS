@@ -1,5 +1,5 @@
 # PUMAS/PUMAS-ensemble
-**PUMAS** and **PUMAS-ensemble** are summary-statistcis-based method to fine-tune, combine, and benchmark PRS methods using only GWAS summary statistics and a LD reference panel. If the PRS fine-tuning is the only task, please use **PUMAS** functions. Otherwise to achieve all three objectives, please use **PUMAS-ensemble**. A workflow of PUMAS/PUMAS-ensemble is shown below   
+**PUMAS** and **PUMAS-ensemble** are summary-statistcis-based method to fine-tune, combine, and benchmark PRS methods using only GWAS summary statistics and an LD reference panel. If the PRS fine-tuning is the only task, please use **PUMAS** functions. Otherwise to achieve all three objectives, please use **PUMAS-ensemble**. A workflow of PUMAS/PUMAS-ensemble is shown below   
 ![here](https://github.com/qlu-lab/PUMAS/blob/master/Workflow.png)   
 
 ## Announcements
@@ -9,12 +9,12 @@
 
 ## Version History
 * 11/04/2022: Upload a tutorial for PUMAS and PUMAS-ensemble.
-* 01/30/2023: Upload a script and tutorial for cleaning GWAS sumamry statistics.
+* 01/30/2023: Upload a script and tutorial for cleaning GWAS summary statistics.
 * 12/02/2024: Update PUMAS with PUMAS-EN and PUMAS-SL.
 
 ## Getting Started
 * Clone this repository by `git clone https://github.com/qlu-lab/PUMAS.git`
-* Downlaod the LD reference data constructed using 1000 Genomes Project Phase III European ancestry data
+* Download the LD reference data constructed using 1000 Genomes Project Phase III European ancestry data
   * **Approximately independent LD blocks**:
     * `wget ftp://ftp.biostat.wisc.edu/pub/lu_group/Projects/PUMAS/LD/ld_1kg.RData`
     * `wget ftp://ftp.biostat.wisc.edu/pub/lu_group/Projects/PUMAS/LD/rs_1kg.RData`
@@ -23,6 +23,10 @@
   * **Frequency data from the LD panel**:
     * `wget ftp://ftp.biostat.wisc.edu/pub/lu_group/Projects/PUMAS/Freq/1kg_hm3_QCed_noM_freq.frq`
   * If `wget` doesn't work, download the data above via [box folder](https://uwmadison.box.com/s/6yv7u8wxm6zutj7763jekdhed47kl0f1).
+* For cross-ancestry analysis (AFR, AMR, EAS, EUR, and SAS ancestries), download the LD reference data:
+  * Download approximately independent LD blocks using 1000 Genome Project data for subsampling via [box folder](https://uwmadison.app.box.com/folder/310471463918?s=c77uea6beiagxnkpa8rc2nagculgjcxa)
+  * For our analysis, we used UKB genotype data to train PRS methods and run ensemble learning, which we cannot share publicly due to UKB policies.
+    *  Methods for extracting UKB LD reference data are described in our [newest paper](https://doi.org/10.1101/2024.11.27.625748). If you have further questions, please reach out via email, and we'd be happy to help.
 * Install the following R (>=3.5.1) dependencies by `install.packages()`:
   * optparse
   * data.table
@@ -30,7 +34,7 @@
   * parallel
 
 ## GWAS summary statistics preparation
-We highly recommend that users clean their summary statistics prior to applying PUMAS/PUMACUBS. Here we provide a GWAS sumstats QC script. **Please make sure that the input GWAS sumstats has rsID for each SNP.** To use the GWAS QC script, run:
+We highly recommend that users clean their summary statistics prior to applying PUMAS/PUMACUBS. Here, we provide a GWAS sumstats QC script. **Please make sure that the input GWAS sumstats has rsID for each SNP.** To use the GWAS QC script, run:
 ```
 Rscript ./code/gwas_qc.R \
 --file_path <raw GWAS sumstats path> \ # required
@@ -56,16 +60,16 @@ Rscript ./code/gwas_qc.R \
 ```
 
 ### Sample size requirement
-Sample size information can be often misspecified in reported GWAS summary statistics. Ideally GWAS sumstats contain per-SNP total sample size for linear regression association statistics and per-SNP case and control sample size for logistic regression association statistics. In practice, for linear and logistic summary statistics, users should provide one of the following sample size information respectively with priority shown below:
+Sample size information is often misspecified in reported GWAS summary statistics. Ideally, GWAS sumstats contain per-SNP total sample size for linear regression association statistics and per-SNP case and control sample size for logistic regression association statistics. In practice, for linear and logistic summary statistics, users should provide one of the following sample size information respectively with priority shown below:
 * **Linear regression**: ```n.col``` > ```n.total```
-* **Logistic regression**: ```n.case.col; n.con.col``` > ```n.case; n.con```. If users provide ```n.case; n.con```, ```n.col``` is also recommened to provide.
+* **Logistic regression**: ```n.case.col; n.con.col``` > ```n.case; n.con```. If users provide ```n.case; n.con```, ```n.col``` is also recommended to provide.
 
 If the sumstats don't contain any per-SNP sample size information, this script will impute sample size and conduct QC based on imputed sample size. We follow sample size imputation introduced in [Prive et al. (2022)](https://www.cell.com/hgg-advances/fulltext/S2666-2477(22)00052-5).
 
 ## Using PUMAS-ensemble
 
 ### Subsample training, tuning, ensemble training, and testing summary statistics
-PUMAS-ensemble uses the same inputs as PUMAS. The only difference between implementation between PUMAS and PUMAS-ensemble is scripting. To partition full GWAS summary statistics to four different subsets, run:
+PUMAS-ensemble uses the same inputs as PUMAS. The only difference in implementation between PUMAS and PUMAS-ensemble is scripting. To partition full GWAS summary statistics to four different subsets, run:
 ```
 Rscript ./code/PUMAS-ensemble.subsampling.R \
 --k <number of folds> \
