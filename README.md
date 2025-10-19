@@ -16,13 +16,11 @@
 * Clone this repository by `git clone https://github.com/qlu-lab/PUMAS.git`
 * Download the LD reference data constructed using 1000 Genomes Project Phase III European ancestry data
   * **Approximately independent LD blocks**:
-    * `wget ftp://ftp.biostat.wisc.edu/pub/lu_group/Projects/PUMAS/LD/ld_1kg.RData`
-    * `wget ftp://ftp.biostat.wisc.edu/pub/lu_group/Projects/PUMAS/LD/rs_1kg.RData`
+    * Download `1kg.RData` via [box folder](https://uwmadison.box.com/s/6yv7u8wxm6zutj7763jekdhed47kl0f1)
   * **Genotype data from the LD panel**:
-    * `wget ftp://ftp.biostat.wisc.edu/pub/lu_group/Projects/PUMAS/LD/1kg_hm3_QCed_noM*`
+    * `wget ftp://ftp.biostat.wisc.edu/pub/lu_group/Projects/PUMAS/LD/1kg_hm3_QCed_noM*` or [box folder](https://uwmadison.box.com/s/6yv7u8wxm6zutj7763jekdhed47kl0f1)
   * **Frequency data from the LD panel**:
-    * `wget ftp://ftp.biostat.wisc.edu/pub/lu_group/Projects/PUMAS/Freq/1kg_hm3_QCed_noM_freq.frq`
-  * If `wget` doesn't work, download the data above via [box folder](https://uwmadison.box.com/s/6yv7u8wxm6zutj7763jekdhed47kl0f1).
+    * `wget ftp://ftp.biostat.wisc.edu/pub/lu_group/Projects/PUMAS/Freq/1kg_hm3_QCed_noM_freq.frq` or [box folder](https://uwmadison.box.com/s/6yv7u8wxm6zutj7763jekdhed47kl0f1)
 * For cross-ancestry analysis (AFR, AMR, EAS, EUR, and SAS ancestries), download the LD reference data:
   * Download approximately independent LD blocks using 1000 Genome Project data for subsampling via [box folder](https://uwmadison.app.box.com/folder/310471463918?s=c77uea6beiagxnkpa8rc2nagculgjcxa)
   * For our analysis, we used UKB genotype data to train PRS methods and run ensemble learning, which we cannot share publicly due to UKB policies.
